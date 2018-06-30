@@ -62,17 +62,27 @@
         }
         if($code == 300)
         {
-            $response=array("status"=>0,"errors"=>array("count"=>1,301));//301 means invalid issue_id
+            $response=array("status"=>0,"errors"=>array("count"=>1,300));//300 means invalid issue_id
             return json_encode($response);
         }
         if($code == 301)
         {
-            $response=array("status"=>0,"errors"=>array("count"=>1,301));//302 means invalid sub_issue_id
+            $response=array("status"=>0,"errors"=>array("count"=>1,301));//301 means invalid sub_issue_id
             return json_encode($response);
         }
         if($code == 302)
         {
             $response=array("status"=>0,"errors"=>array("count"=>1,302));//302 VICTIM NOT BELONG YOU OR INVALID VICTIM ID
+            return json_encode($response);
+        }
+        if($code == 303)
+        {
+            $response=array("status"=>0,"errors"=>array("count"=>1,303));//303 INVALID ACCOUNT RELATION OR INVOICE OP AND SUBSCRIBER OR INVALID PRODUCT ID
+            return json_encode($response);
+        }
+        if($code == 304)
+        {
+            $response=array("status"=>0,"errors"=>array("count"=>1,304));//304 AMOUNT NOT MACTHING
             return json_encode($response);
         }
     }

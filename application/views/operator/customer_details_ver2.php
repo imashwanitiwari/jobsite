@@ -371,7 +371,11 @@
          $("#invoice").DataTable({
                      "ajax":{
                               "type":"post",
+<<<<<<< HEAD
                                "url":"http://localhost/dcn/api/invoice/get_invoice",
+=======
+                               "url":"<?= base_url('api/invoice/get_invoice')?>",
+>>>>>>> a899e9c2173c72722336e2ee6270fb28915321a1
                               "data":{"OP_ID":<?php echo $_SESSION['dcn_id']?>,"api_key":1234,"START_DATE":"2018-05-30 13:27:43","END_DATE":d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds(),"BY":"SUBSCRIBER_ID","BY_ID":<?php echo $data[0]['ID']?>}
                      },
 
@@ -402,7 +406,11 @@
 
            "ajax":{
                               "type":"post",
+<<<<<<< HEAD
                                "url":"http://localhost/dcn/operator/boxes/subscriber_boxes",
+=======
+                               "url":"<?= base_url('operator/boxes/subscriber_boxes')?>",
+>>>>>>> a899e9c2173c72722336e2ee6270fb28915321a1
                               "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
                      },
 
@@ -454,7 +462,11 @@
 
               "ajax":{
                               "type":"post",
+<<<<<<< HEAD
                                "url":"http://localhost/dcn/operator/customers/money_load",
+=======
+                               "url":"<?= base_url('operator/customers/money_load')?>",
+>>>>>>> a899e9c2173c72722336e2ee6270fb28915321a1
                               "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
                      },
 
