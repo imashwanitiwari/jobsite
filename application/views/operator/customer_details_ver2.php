@@ -371,8 +371,8 @@
          $("#invoice").DataTable({
                      "ajax":{
                               "type":"post",
-                               "url":"http://localhost/dcntv-app/api/invoice/get_invoice",
-                              "data":{"OP_ID":<?php echo json_encode($_SESSION['dcn_id'])?>,"api_key":1234,"START_DATE":"2018-05-30 13:27:43","END_DATE":d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds(),"BY":"SUBSCRIBER_ID","BY_ID":<?php echo $data[0]['ID']?>}
+                               "url":"http://localhost/dcn/api/invoice/get_invoice",
+                              "data":{"OP_ID":<?php echo $_SESSION['dcn_id']?>,"api_key":1234,"START_DATE":"2018-05-30 13:27:43","END_DATE":d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds(),"BY":"SUBSCRIBER_ID","BY_ID":<?php echo $data[0]['ID']?>}
                      },
 
                      "columns":[
@@ -402,7 +402,7 @@
 
            "ajax":{
                               "type":"post",
-                               "url":"http://localhost/dcntv-app/operator/boxes/subscriber_boxes",
+                               "url":"http://localhost/dcn/operator/boxes/subscriber_boxes",
                               "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
                      },
 
@@ -454,16 +454,20 @@
 
               "ajax":{
                               "type":"post",
-                               "url":"http://localhost/dcntv-app/operator/customers/money_load",
+                               "url":"http://localhost/dcn/operator/customers/money_load",
                               "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
                      },
 
                      "columns":[
                         { "data": "DATE" },
                         { "data": "MONEY" },
-                        { "data": null,
+                        { "data": "DR_ID",
                             render : function (data, type, row) {
-                                return 'cash';
+                                switch(data) {
+                                        case '1' : return 'CASH'; break;
+                                        case '2' : return 'CHEQUE'; break;
+                                        default  : return 'N/A';
+                                     }
                             }
                         
                          },

@@ -155,7 +155,7 @@ var tablee=$('#customer').DataTable(
             url:"http://localhost/dcntv-app/api/payment/add_money",
             type:"POST",
             dataType:"json",
-            data:{"api_key":"1234","OP_ID":$("#OP_ID").val(),"CR_ID":$("#ACCOUNT_ID").val(),"DR_ID":3,"AREA_ID":$("#AREA_ID").val(),"STAFF_ID":$("#STAFF_ID").val(),"PARTICULAR":"PACK ACTIVATION PAYMENT","AMOUNT":$("#PAYING").val(),"REFRENCE":null,"DATE":$("#ACTIVATION_DATE").val()},
+            data:{"api_key":"1234","OP_ID":$("#OP_ID").val(),"CR_ID":$("#ACCOUNT_ID").val(),"DR_ID":$("#PAY_MODE").val(),"AREA_ID":$("#AREA_ID").val(),"STAFF_ID":$("#STAFF_ID").val(),"PARTICULAR":"PACK ACTIVATION PAYMENT","AMOUNT":$("#PAYING").val(),"REFRENCE":null,"DATE":$("#ACTIVATION_DATE").val()},
             success:function(response)
             {
 
