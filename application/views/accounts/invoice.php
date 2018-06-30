@@ -118,8 +118,8 @@ var d = new Date();
 $.ajax({
     
    "type":"post",
-	 "url" :"http://localhost/dcntv-app/api/invoice/get_invoice",
-	 "data":{"OP_ID":<?php echo $_SESSION['dcn_id']?>, "api_key":1234,"START_DATE":"2018-05-30 17:02:14","END_DATE":d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds(),"BY":"INVOICE_NO","BY_ID":<?php echo $_POST['INVOICE_NO']?>},
+	 "url" :"<?=base_url('api/invoice/get_invoice_details')?>",
+	 "data":{"OP_ID":<?php echo $_SESSION['dcn_id']?>, "api_key":1234,"INVOICE_NO":<?php echo $_POST['INVOICE_NO']?>},
     "dataType":"json",
     success:function(result){
     //alert(result['data'].length);
@@ -127,7 +127,7 @@ $.ajax({
       var sub_total=0;
 			for(var inn=0;inn<result['data'].length;inn++){
 				//alert(result['data'][inn]['REF']);
-				sub_total+=result['data'][inn]['QUANTITY']*result['data'][inn]['AMOUNT'];
+				sub_total+=result['data'][inn]['QUANTITY']*result['data'][inn]['RATE'];
 				if(result['data'][inn]['REF'].split("_")[0]=='packs')
 					var desc='PACK ACTIVATION CHARGE';
 			
@@ -138,7 +138,7 @@ $.ajax({
 				else 
 				var desc='NO DESRIPTION';
 
-				to_append+='<tr><td>'+result['data'][inn]['PRODUCT']+'</td><td>'+desc+'</td><td class="text-right">'+result['data'][inn]['QUANTITY']+'</td><td class="text-right">'+result['data'][inn]['AMOUNT']+'</td><td class="text-right">'+result['data'][inn]['QUANTITY']*result['data'][inn]['AMOUNT']+'</td>';
+				to_append+='<tr><td>'+result['data'][inn]['PRODUCT']+'</td><td>'+desc+'</td><td class="text-right">'+result['data'][inn]['QUANTITY']+'</td><td class="text-right">'+result['data'][inn]['RATE']+'</td><td class="text-right">'+result['data'][inn]['QUANTITY']*result['data'][inn]['RATE']+'</td>';
 			}
 		
      $("#invoice_data").append(to_append);
