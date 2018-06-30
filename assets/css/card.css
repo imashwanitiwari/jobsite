@@ -1,0 +1,218 @@
+html, body {
+	height: 100%
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, font, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, meter, nav, object, ol, output, p, pre, progress, q, rp, rt, ruby, s, samp, section, small, strike, strong, sub, summary, sup, time, tt, u, ul, var, video, xmp {
+	border: 0;
+	margin: 0;
+	padding: 0;	
+}
+body {
+font: normal 11px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+color: #4f6b72;
+/* background: #E6EAE9; */
+margin: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block
+}
+b, strong {
+	font-weight: bold
+}
+img {
+	color: transparent;
+	font-size: 0;
+	vertical-align: middle;
+	-ms-interpolation-mode: bicubic
+}
+a {
+	color: #c75f3e;
+}
+
+#mytable {
+width: 664px;
+padding: 0;
+margin: 0;
+font-size: 9pt;
+}
+
+caption {
+	font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	margin-top: 0px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 0px 0px 0px 0px;
+	background: #CAE8EA url(bg_header.jpg) no-repeat;
+}
+
+th {
+font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+color: #4f6b72;
+border-right: 1px solid #C1DAD7;
+border-bottom: 1px solid #C1DAD7;
+border-top: 1px solid #C1DAD7;
+letter-spacing: 2px;
+/* text-transform: uppercase; */
+text-align: left;
+padding: 0px 0px 0px 7px;
+background: #CAE8EA url(bg_header.jpg) no-repeat;
+}
+
+th.nobg {
+	border-top: 0;
+	border-left: 0;
+	border-right: 1px solid #C1DAD7;
+	background: none;
+}
+
+td {
+border-right: 1px solid #C1DAD7;
+border-bottom: 1px solid #C1DAD7;
+background: #fff;
+padding: 0px 0px 0px 4px;
+color: #4f6b72;
+}
+
+
+td.alt {
+	background: #F5FAFA;
+	color: #797268;
+}
+
+th.spec {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #fff url(bullet1.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+th.specalt {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #f5fafa url(bullet2.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #797268;
+}
+.button-blue {
+	-moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background-color:#007dc1;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+	margin-left: -.5px;
+}
+.button-blue:hover {
+	background-color:#0061a7;
+}
+.button-blue:active {
+	position:relative;
+	top:1px;
+}
+label{
+    text-align: right;
+    padding: 8 0 9 10;
+    color: #969696;
+	background: -moz-linear-gradient(top, #FBFBFB 0%, #E9E9E9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FBFBFB), color-stop(100%,#E9E9E9));
+   appearance:none;
+    -webkit-appearance:none; 
+   -moz-appearance: none;
+    text-indent: 0.01px;
+}
+.no-print{
+	margin-left:auto;
+    margin-right:auto;
+    max-width: 500px;
+    background: #FFF;
+    padding: 30px 30px 20px 30px;
+    box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
+    -webkit-box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #666;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+	float: right;
+	margin-right: 10px;
+}
+.no-print form{
+	float: left;
+    margin-left: 100px;
+}
+select{
+    background: url('down-arrow.png') no-repeat right, -moz-linear-gradient(top, #FBFBFB 0%, #E9E9E9 100%);
+    background: url('down-arrow.png') no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FBFBFB), color-stop(100%,#E9E9E9));
+   appearance:none;
+    -webkit-appearance:none; 
+   -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+    width: 20%;
+    line-height: 15px;
+    height: 30px;
+    border: 0;
+}
+.header{
+	background-image: url(carbon.png);
+	width:100%;
+	display: block;
+	height: 80px;
+	padding: 5px;
+	z-index: 200;
+	position: relative;
+	float: none;
+}
+.logo-img{
+	padding: 5 5 0 0;
+	float: left;
+}
+@-moz-document url-prefix(){
+	.logo-img{
+		padding: 0 5 0 0;	
+	}
+}
+@-moz-document url-prefix(){
+	.logo-img img{
+		margin-left: 10px;
+	}
+}
+/* Flaired edges, by Tomas Theunissen */
+		
+hr.style-seven {
+    height: 30px;
+	position: absolute;
+	width: 90px;
+	color: green;
+	margin: 20px;
+	margin-top: 23px;
+    border-style: solid;
+    border-color: green;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+}
+hr.style-seven:before { /* Not really supposed to work, but does */
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;    
+    border-style: solid;
+    border-color: green;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
