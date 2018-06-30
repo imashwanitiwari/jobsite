@@ -123,8 +123,9 @@ class Add_cust_model extends CI_Model{
 	   {
 	   $data4[]= array(
 		'PAIRING_ID'  => $pair_id[$m-1] ,
-		'PAIRING_NO' =>  1,
-		'CHANGE_STATUS' => 0,
+		'STB_ID' =>  $stb_id[$m-1],
+		'VC_ID' => $vc_id[$m-1],
+		'STATUS' => 1,
 		'CHARGE_APPLIED'  => 0,
 		'IS_ADJUSTMENT' =>  0,
 		
