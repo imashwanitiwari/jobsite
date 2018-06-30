@@ -352,7 +352,29 @@
 						</div>
 					</div>
 					<!-- /Row -->
-					
+					<div class="container">
+					<!-- Modal -->
+							<div class="modal fade" id="myModal" role="dialog">
+								<div class="modal-dialog">
+								
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Select Packs & ALA</h4>
+									</div>
+									<div class="modal-body" id="get_packs">
+									
+									</div>
+									<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+								
+								</div>
+							</div>
+							
+					</div>
 					<script>
 					$(document).on("change","#select1",function(){
 
@@ -434,7 +456,8 @@
 							    
 				               $(".edit").append('<button type="button" id="<?php echo $k ?>" class="btn btn-sm btn-success mr-10 EEdit" style="border-radius: 50%;margin: 4px 2px;padding: 20px;"> Edit Box'+'<br>'+'<span style="font-size:10px"><?php  echo "VC NO:".$vc_no[$k-1]['VC_NO']?></span>'+'</button>');
 							   <?php	
-				            }
+							}
+							
                        ?>
                     
 					   $(document).on("click",".EEdit",function(){
@@ -517,13 +540,38 @@
 									
 									
 								});
+
+								
 																
             
 							}
+
+							$("#pack_place"+ind).append('<button type="button" class="change_pack" id="change_pack-'+ind+'" data-toggle="modal" data-target="#myModal" >Change Pack</button>');
 							$("#box_pack_count").append('<input type="hidden" name="box'+ind+'" value="'+result.length+'">');
 							$("#STB_VC_PAIRING").append('<input type="hidden" name="STB_VC_PAIR'+ind+'" value="'+result[0]['STB_ID']+'-'+result[0]['VC_ID']+'-'+result[0]['PAIRING_ID']+'">');
 							$("#counterr").val(ind);
+                            $("#change_pack-"+ind).on("click",function(){
+                                
+								var attr=$(this).attr('id').split("-")[1];
+								var COMP_ID=$("#COMP_VAL"+attr).val();
 
+								$.ajax({
+											"type":"post",
+											"url":"<?php echo base_url('operator/add_customer/show_mso_packs_ala3')?>",
+											"data":{"COMP_ID":COMP_ID},
+
+											success:function(result){
+												$("#get_packs").html(result);
+											},
+
+											error:function(){
+												alert('error');
+											}
+
+
+								});
+
+							})  
 
 							},
 							error: function(result) {
@@ -606,15 +654,7 @@
 
 															} */
 															
-															  
-
-																
-                                                           
-
-
-
-
-
+														
 					                                       });
 					  
 														    $(document).on("click",".pc",function(){
@@ -624,7 +664,7 @@
 																} );
 
 												   
-												   
+											 
 												  
 
 

@@ -89,6 +89,17 @@ class Add_customer extends MY_Controller {
 	
 					
 	   }
+
+	   public function show_mso_packs_ala3(){
+		
+		$id=$_POST['COMP_ID'];	
+		$data['data']=$this->add_cust_model->packnames($id); 
+		$data['ala']=$this->add_cust_model->ala_channels($id);
+		$this->load->view('operator/scripts/select_packs3',$data);
+		
+	
+					
+	   }
 }
 
 

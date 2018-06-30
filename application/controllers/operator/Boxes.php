@@ -15,7 +15,7 @@ $this->load->view('include/footer');
 public function subscriber_boxes(){
 $id=$_POST['SUBSCRIBER_ID'];
 $this->load->library('datatables');
-$this->datatables->select('BOX_NO, BOX_TYPE,VC_NO,mso_op_pairing.STATUS,ACTIVATION_DATE')
+$this->datatables->select('mso_op_pairing.ID,BOX_NO, BOX_TYPE,VC_NO,mso_op_pairing.STATUS,ACTIVATION_DATE')
 ->from('subscriber_pairing_packs')
 ->join('mso_op_pairing ','mso_op_pairing.ID=subscriber_pairing_packs.PAIRING_ID')
 ->join('pack_activation','pack_activation.PAIRING_ID=subscriber_pairing_packs.PAIRING_ID')
@@ -70,6 +70,18 @@ public function add_box_stock(){
 
 
 
+}
+
+public function box_tracking(){
+
+         $this->load->library('datatables');
+         $this->datatables->select('STATUS,DATE_TIME,BOX_NO,VC_NO')
+         ->from('box_tracking')
+         ->join('company_stb','company_stb.ID=box_tracking.STB_ID')
+         ->join('company_vc','company_vc.ID=box_tracking.VC_ID')
+         ->where('box_tracking.PAIRING_ID',$_POST['PAIRING_ID']);
+
+       echo $this->datatables->generate();
 }
 
 }
