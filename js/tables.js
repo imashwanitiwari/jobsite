@@ -526,7 +526,48 @@ var tablee=$('#customer').DataTable(
            });    */ 
 
           
-          
+          $("#add_tax_table").DataTable({
+            //"processing": true,
+            //"serverSide": true,
+      
+            "ajax":
+             {
+                
+              "url":"get_products",
+               "type":"POST"
+            },
+           
+              
+            "columns": [
+              { "data": "NAME" },
+              {render : function (data, type, row,meta) {
+                return "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-whatever='@mdo'><i class='fa fa-pencil text-inverse m-r-10'></i></button>";
+               
+           },"searchable":false}
+            ]
+              
+          });
+        //   $("#add_tax_table2").DataTable({
+        //     //"processing": true,
+        //     //"serverSide": true,
+      
+        //     "ajax":
+        //      {
+                
+        //       "url":"get_taxes",
+        //        "type":"POST"
+        //     },
+           
+              
+        //     "columns": [
+        //       { "data": "NAME" },
+        //       {render : function (data, type, row,meta) {
+        //         return "<button type='button'> Add</button>";
+               
+        //    },"searchable":false}
+        //     ]
+              
+        //   });
 
 
 } );
