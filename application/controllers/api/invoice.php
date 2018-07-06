@@ -232,7 +232,7 @@ class Invoice extends CI_Controller
                 {
                     if(isset($_POST['OP_ID'], $_POST['PRODUCT_ID'], $_POST['ACCOUNT_ID'], $_POST['RATE'], $_POST['RATE_TYPE']) && !in_array("",$_POST))
                     {
-                        if($this->where->check_where_num("products",["ID" => $_POST['PRODUCT_ID']]) == 1 && $this->where->check_where_num("accouting_ledgers",["ID"=>$_POST['ACCOUNT_ID']]) == 1)
+                        if($this->where->check_where_num("products",["ID" => $_POST['PRODUCT_ID']]) == 1 && $this->where->check_where_num("accouting_ledgers",["ID"=>$_POST['ACCOUNT_ID']]) == 1 && $this->where->check_where_num("tax",["PRODUCT_ID"=>$_POST['PRODUCT_ID'], "ACCOUNT_ID"=>$_POST['ACCOUNT_ID'], "STATUS"=> 1, "VISIBLE" => $_POST['OP_ID'] ]) == 0)
                         {
                             $data = array(
                                 "PRODUCT_ID" => $_POST['PRODUCT_ID'],

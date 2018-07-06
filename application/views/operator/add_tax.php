@@ -68,27 +68,30 @@
 														
 														<div class="modal-body">
 														<!-- //remove inline tag in future -->
-														<table id="add_tax_table2" class="table table-hover display" style="width:100%" >
-												<thead>
-													<tr>
-														<th>Tax Name </th>
-														<th></th>
-													</tr>
-												</thead>
+												<table id="add_tax_table2" class="table table-hover display" style="width:100%" >
+													<thead>
+														<tr>
+															<th>Tax Name </th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody id="tbody1">
+													</tbody>	
+													<tbody id="tbody2">
+													</tbody>	
+													<tfoot>
+														<tr>
+															<th>Tax Name </th>
+															<th></th>
+														</tr>
+													</tfoot>
 													
-                                                <tfoot>
-													<tr>
-														<th>Tax Name </th>
-														<th></th>
-													</tr>
-												</tfoot>
-                                                
-											</table>		
+												</table>		
 																
 														</div>
                                                    </form>
 													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+														<button type="button" class="btn btn-default mdl-close" data-dismiss="modal">Close</button>
 													</div>
                                                    
 												</div>
@@ -97,4 +100,4 @@
                         </form>
 				
 			</div>
-			<script src="<?base_url('js/tables.js')?>"></script>
+			<script src="<?= base_url('assets/js/tax.js')?>"></script>

@@ -23,16 +23,37 @@ class Taxes extends MY_Controller {
 		//    $this->datatables->select('NAME')->from('products');
 		//    echo $this->datatables->generate();
 		$this->load->model('tax');
-		$this->tax->get_product();
+		$this->tax->get_product($_SESSION['dcn_id']);
 	}
 
-	public function get_taxes(){
+	public function get_taxes($product_id,$type){
 		$this->load->model('where');
-		$data = $this->where->select_where("accouting_ledgers",["UNDER"=>20],"NAME");
-			foreach($data as $data):
-				$response['data'][] = $data;
-			endforeach;
+		$product_id=(int)$product_id;
+		$type = (int)$type;
+		switch ($type) {
+			case 1:
+				$type="IN";
+				break;
+			case 2:
+				$type = "NOT IN";
+				break;
+			default:
+			$type = "NOT IN";
+				break;
+		}
+		if($this->where->check_where_num("products",["id"=>$product_id]))
+		{
+			$data = $this->where->select_where("accouting_ledgers","UNDER = 20 AND ID ".$type."(SELECT ACCOUNT_ID FROM tax WHERE PRODUCT_ID IN(".$product_id.") AND STATUS!=0)","ID,NAME");
+				foreach($data as $data):
+					$response['data'][] = $data;
+				endforeach;
+					$response['op_id'] = $_SESSION['dcn_id'];
 			echo json_encode($response);
-		
+		}
+		else
+		{
+			$this->load->library('api');
+			echo $this->api->errors(102);
+		}
 	}
 }
