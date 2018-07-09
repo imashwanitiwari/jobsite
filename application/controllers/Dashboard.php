@@ -30,8 +30,8 @@ class Dashboard extends MY_Controller {
 		$result4=$query4->row_array();
 		
 
-		$query5=$this->db->query('select count(BOX_NO) as ACTIVE_BOX from company_stb where OP_MSO_ID IN(select ID from operators_mso where OP_ID='.$_SESSION['dcn_id'].') AND STATUS=1');
-		$result5=$query5->row_array();
+		$query5=$this->db->query('select count(STB_ID) as ACTIVE_BOX from mso_op_pairing where OP_MSO_ID IN(select ID from operators_mso where OP_ID='.$_SESSION['dcn_id'].')'.' AND STATUS=1');
+		$result5=$query5->row_array(); 
 
 		$query6=$this->db->query('select count(ID) as COMPLAINS from complaints where OP_ID ='.$_SESSION['dcn_id']);
 		$result6=$query6->row_array();

@@ -205,7 +205,8 @@
 
 
                    <div class="panel-body">            
-                        <table class="table table-bordered table-responsive">
+                        <table class="table table-bordered table-responsive" id="pay_card">
+                           <thead> 
                             <tr>
                             <th>Months</th>				 				
                             <th>Transaction Time</th>
@@ -217,7 +218,7 @@
                             <th>Receipt#</th>
                             <th>Lineman</th>
                             </tr>
-
+                            </thead> 
                         </table>
 
 
@@ -560,6 +561,23 @@
          });  
 
 
+         });
+
+         $("#pay_card").DataTable({
+
+            "ajax":{
+                              "type":"post",
+                               "url":"<?php echo base_url('operator/customers/payment_card')?>",
+                              "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
+                     },
+
+
+                     "columns":[
+                        { "data": "BOX_NO" },
+                        { "data": "VC_NO" },
+                        { "data": "STATUS",}
+
+                     ]
          });
 
        });

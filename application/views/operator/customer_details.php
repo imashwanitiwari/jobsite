@@ -367,7 +367,7 @@
 									
 									</div>
 									<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button type="button" id="pack_model_close" class="btn btn-default" data-dismiss="modal">Close</button>
 									</div>
 								</div>
 								
@@ -494,14 +494,14 @@
 							for(var b=0;b<=result.length-1;b++){
 								if(result[b]['TYPE']==0)  {
 
-								$("#pack_place"+ind).append('<button type="button" id="" class="btn btn-sm btn-info mr-10 pc" style="border-radius: 50%;margin: 4px 2px;padding: 20px;" data-toggle="collapse" data-target="#'+ind+b+'"> Edit Pack'+'<br>'+result[b]['PA_NAME']+'-'+result[b]['AMOUNT']+'</button><div id="'+ind+b+'" class="collapse"><div style="border-bottom: 1px solid blue;width:17%;height:auto;border-radius: 25px;background:hsl(197, 44%, 50%);padding: 20px;"><ul><li><input type="hidden" name="PAC_ACT_ID'+ind+b+'" id="PACK_ACT_ID'+ind+b+'" value='+'"'+result[b]['PACK_ACT_ID']+'"'+'>Pack Name:<input class="form-control" type="text" name="PACK'+ind+b+'" value='+'"'+result[b]['PA_NAME']+'-'+result[b]['AMOUNT']+'"'+'></li><li>Pack Amount:<input class="form-control" type="text" name="AMOUNT'+ind+b+'" value='+'"'+result[b]['AMOUNT']+'"'+'></li><li>Discount:<input class="form-control" type="text" name="DISC_AMOUNT'+ind+b+'" value='+'"'+result[b]['DISC_AMOUNT']+'"'+'> </li><li>Discount Type:<select  class="form-control dtype" name="DISCOUNT_TYPE'+ind+b+'" id="disc"><option value="0" >Flat</option><option value="1" >Percentage</option></select></li><li>Biling Cycle:<select class="form-control" name="BILLING_CYCLE'+ind+b+'" ><option value="0">Monthly</option><option value="1">Daily</option></select></li><li>Auto Renew:<select class="form-control" name="AUTO_RENEW'+ind+b+'" ><option value="0">Yes</option><option value="1">No</option></select></li><li>Activation Date:<div class="input-group date" id="ACTIVATION_DATE'+ind+b+'"><input type="text" class="form-control" name="ACTIVATION_DATE'+ind+b+'" id="" value='+'"'+result[b]['ACTIVATION_DATE']+'"'+'/><span class="input-group-addon"><span class="fa fa-calendar"></span></span></div></li><li>Expiry days:<input  type="text" class="form-control"  name="CLOSING_DATE'+ind+b+'" value='+'"'+result[b]['CLOSING_DATE']+'"'+'></li><li><input type="hidden" name="" value="0"></li><li><input type="hidden" name="" value=""></li></ul></div></div>');
-								 
+								$("#pack_place"+ind).append('<button type="button" id="" class="btn btn-sm btn-info mr-10 pc" style="border-radius: 50%;margin: 4px 2px;padding: 20px;" data-toggle="collapse" data-target="#'+ind+b+'"> Edit Pack'+'<br>'+result[b]['PA_NAME']+'-'+result[b]['AMOUNT']+'</button><div id="'+ind+b+'" class="collapse"><div style="border-bottom: 1px solid blue;width:17%;height:auto;border-radius: 25px;background:hsl(197, 44%, 50%);padding: 20px;"><ul><li>Pack Name:<input class="form-control" type="text" name="PACK'+ind+b+'" value='+'"'+result[b]['PA_NAME']+'-'+result[b]['AMOUNT']+'"'+'></li><li>Pack Amount:<input class="form-control" type="text" name="AMOUNT'+ind+b+'" value='+'"'+result[b]['AMOUNT']+'"'+'></li><li>Discount:<input class="form-control" type="text" name="DISC_AMOUNT'+ind+b+'" value='+'"'+result[b]['DISC_AMOUNT']+'"'+'> </li><li>Discount Type:<select  class="form-control dtype" name="DISCOUNT_TYPE'+ind+b+'" id="disc"><option value="0" >Flat</option><option value="1" >Percentage</option></select></li><li>Biling Cycle:<select class="form-control" name="BILLING_CYCLE'+ind+b+'" ><option value="0">Monthly</option><option value="1">Daily</option></select></li><li>Auto Renew:<select class="form-control" name="AUTO_RENEW'+ind+b+'" ><option value="0">Yes</option><option value="1">No</option></select></li><li>Activation Date:<div class="input-group date" id="ACTIVATION_DATE'+ind+b+'"><input type="text" class="form-control" name="ACTIVATION_DATE'+ind+b+'" id="" value='+'"'+result[b]['ACTIVATION_DATE']+'"'+'/><span class="input-group-addon"><span class="fa fa-calendar"></span></span></div></li><li>Expiry days:<input  type="text" class="form-control"  name="CLOSING_DATE'+ind+b+'" value='+'"'+result[b]['CLOSING_DATE']+'"'+'></li><li><input type="hidden" name="" value="0"></li><li><input type="hidden" name="" value=""></li></ul></div></div>');
+								$("#pack_ids"+ind).append('<input type="hidden" name="PAC_ACT_ID'+ind+b+'" id="PACK_ACT_ID'+ind+b+'" value='+'"'+result[b]['PACK_ACT_ID']+'"'+'>'); 
 								
 								}  
 							
 								else{
 
-								$("#pack_place"+ind).append('<button type="button" id="" class="btn btn-sm btn-info mr-10 pc" style="border-radius: 50%;margin: 4px 2px;padding: 20px;" data-toggle="collapse" data-target="#'+ind+b+'" > Edit ALA'+'<br>'+result[b]['CHA_NAME']+'-'+result[b]['AMOUNT']+'</button><div id="'+ind+b+'" class="collapse"><div style="border-bottom: 1px solid blue;width:17%;height:auto;border-radius: 25px;background:hsl(197, 44%, 50%);padding: 20px;"><ul><li><input type="hidden" name="PAC_ACT_ID'+ind+b+'" id="PACK_ACT_ID'+ind+b+'" value='+'"'+result[b]['PACK_ACT_ID']+'"'+'>Channel Name:<input class="form-control" type="text" name="PACK'+ind+b+'" value='+'"'+result[b]['CHA_NAME']+'-'+result[b]['AMOUNT']+'"'+'></li><li>Channel Amount:<input class="form-control" type="text" name="AMOUNT'+ind+b+'" value='+'"'+result[b]['AMOUNT']+'"'+'></li><li>Discount:<input class="form-control" type="text" name="DISC_AMOUNT'+ind+b+'" value='+'"'+result[b]['DISC_AMOUNT']+'"'+'> </li><li>Discount Type:<select  class="form-control" name="DISCOUNT_TYPE'+ind+b+'" id="disc"><option value="0">Flat</option><option value="1">Percentage</option></select></li><li>Biling Cycle:<select class="form-control" name="BILLING_CYCLE'+ind+b+'" ><option value="0">Monthly</option><option value="1">Daily</option></select></li><li>Auto Renew:<select class="form-control" name="AUTO_RENEW'+ind+b+'" ><option value="0">Yes</option><option value="1">No</option></select></li><li>Activation Date:<div class="input-group date" id="ACTIVATION_DATE'+ind+b+'"><input type="text" class="form-control" name="ACTIVATION_DATE'+ind+b+'" id="" value='+'"'+result[b]['ACTIVATION_DATE']+'"'+'/><span class="input-group-addon"><span class="fa fa-calendar"></span></span></div></li><li>Expiry days:<input  type="text" class="form-control"  name="CLOSING_DATE'+ind+b+'" value='+'"'+result[b]['CLOSING_DATE']+'"'+'></li><li><input type="hidden" name="" value="0"></li><li><input type="hidden" name="" value=""></li></ul></div></div>');
+								$("#ala_place"+ind).append('<button type="button" id="" class="btn btn-sm btn-info mr-10 pc" style="border-radius: 50%;margin: 4px 2px;padding: 20px;" data-toggle="collapse" data-target="#'+ind+b+'" > Edit ALA'+'<br>'+result[b]['CHA_NAME']+'-'+result[b]['AMOUNT']+'</button><div id="'+ind+b+'" class="collapse"><div style="border-bottom: 1px solid blue;width:17%;height:auto;border-radius: 25px;background:hsl(197, 44%, 50%);padding: 20px;"><ul><li><input type="hidden" name="PAC_ACT_ID'+ind+b+'" id="PACK_ACT_ID'+ind+b+'" value='+'"'+result[b]['PACK_ACT_ID']+'"'+'>Channel Name:<input class="form-control" type="text" name="PACK'+ind+b+'" value='+'"'+result[b]['CHA_NAME']+'-'+result[b]['AMOUNT']+'"'+'></li><li>Channel Amount:<input class="form-control" type="text" name="AMOUNT'+ind+b+'" value='+'"'+result[b]['AMOUNT']+'"'+'></li><li>Discount:<input class="form-control" type="text" name="DISC_AMOUNT'+ind+b+'" value='+'"'+result[b]['DISC_AMOUNT']+'"'+'> </li><li>Discount Type:<select  class="form-control" name="DISCOUNT_TYPE'+ind+b+'" id="disc"><option value="0">Flat</option><option value="1">Percentage</option></select></li><li>Biling Cycle:<select class="form-control" name="BILLING_CYCLE'+ind+b+'" ><option value="0">Monthly</option><option value="1">Daily</option></select></li><li>Auto Renew:<select class="form-control" name="AUTO_RENEW'+ind+b+'" ><option value="0">Yes</option><option value="1">No</option></select></li><li>Activation Date:<div class="input-group date" id="ACTIVATION_DATE'+ind+b+'"><input type="text" class="form-control" name="ACTIVATION_DATE'+ind+b+'" id="" value='+'"'+result[b]['ACTIVATION_DATE']+'"'+'/><span class="input-group-addon"><span class="fa fa-calendar"></span></span></div></li><li>Expiry days:<input  type="text" class="form-control"  name="CLOSING_DATE'+ind+b+'" value='+'"'+result[b]['CLOSING_DATE']+'"'+'></li><li><input type="hidden" name="" value="0"></li><li><input type="hidden" name="" value=""></li></ul></div></div>');
                                         
 
 								}     
@@ -558,7 +558,7 @@
 								$.ajax({
 											"type":"post",
 											"url":"<?php echo base_url('operator/add_customer/show_mso_packs_ala3')?>",
-											"data":{"COMP_ID":COMP_ID},
+											"data":{"COMP_ID":COMP_ID,"CURRENT_COMP":attr},
 
 											success:function(result){
 												$("#get_packs").html(result);
@@ -638,6 +638,11 @@
 																'</div>'+'<hr class="light-grey-hr"/>'+
 																'<h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-account-box mr-10"></i>Package Details</h6>'+
 																'<div id="pack_place'+ind+'"></div>'+
+																'<div id="pack_ids'+ind+'"></div>'+
+																
+																'<hr class="light-grey-hr"/>'+
+
+																'<div id="ala_place'+ind+'"></div>'+
 																
 																'<hr class="light-grey-hr"/>'+
 															
