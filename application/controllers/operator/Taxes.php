@@ -44,7 +44,7 @@ class Taxes extends MY_Controller {
 		if($this->where->check_where_num("products",["id"=>$product_id]))
 		{
 			$data = $this->where->select_where("accouting_ledgers","UNDER = 20 AND ID ".$type."(SELECT ACCOUNT_ID FROM tax WHERE PRODUCT_ID IN(".$product_id.") AND STATUS!=0)","ID,NAME");
-				foreach($data as $data):
+				foreach((array)$data as $data):
 					$response['data'][] = $data;
 				endforeach;
 					$response['op_id'] = $_SESSION['dcn_id'];
