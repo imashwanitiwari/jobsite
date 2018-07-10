@@ -41,6 +41,20 @@ class Where extends CI_Model {
                         return false;
                     }
             }
+
+            public function select_where_obj($table,$array,$select)
+            {
+               $query = $this->db->where($array)
+                         ->select($select)
+                         ->get($table);
+                if($query->num_rows()>0)
+                    {
+                        return $query;
+                    }
+                    else {
+                        return false;
+                    }
+            }
             public function update_where($table,$array,$data)
             {
                $query = $this->db->where($array)

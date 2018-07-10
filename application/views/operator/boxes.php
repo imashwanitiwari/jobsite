@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 															<div class="col-sm-9">
 																<div class="input-group">
 																	<div class="input-group-addon"><i class="icon-user"></i></div>
-																	<input type="text" class="form-control" id="" name="BOX_NO1" placeholder="">
+																	<input type="text" class="form-control" id="" name="BOX_NO1" placeholder="" required>
 																</div>
 															</div>
 														</div>
@@ -60,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 															<div class="col-sm-9">
 																<div class="input-group">
 																	<div class="input-group-addon"><i class="icon-user"></i></div>
-																	<input type="text" class="form-control" id="" name="VC_NO1" placeholder="">
+																	<input type="text" class="form-control" id="" name="VC_NO1" placeholder="" required>
 																</div>
 															</div>
 														</div>

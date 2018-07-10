@@ -26,7 +26,22 @@ $this->load->view('include/footer');
 
 
             }
+			
+public function due_customers(){
+	
+	$this->load->view('include/header');
+	$this->load->helper('select');
+    $this->load->view('operator/due_customers');
+    $this->load->view('include/footer');
+}			
 
+public function deleted_customers(){
+	
+	$this->load->view('include/header');
+	$this->load->view('operator/deleted_customers');
+    $this->load->view('include/footer');
+	
+}
 public function view_details()
 {
     $this->load->helper('select');

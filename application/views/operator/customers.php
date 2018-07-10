@@ -21,36 +21,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</div>
                 <!-- /Title -->
 				<div class="table-responsive">
-              <table class="table table-bordered display" id="customer" style="width:100%">
-					<thead>
+					<table class="table table-bordered display" id="customer" style="width:100%">
+						<thead>
+							<tr>
+								<th>Subs No</th>
+								<th>Name</th>
+								<th>Area</th>
+								<th>Primary VC</th>
+								<th>Boxes</th>
+								<th>Due Date</th>
+								<th>Status</th>
+								<th>Rent</th>
+								<th>Tools</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+						<tfoot>
 						<tr>
-							<th>Subs No</th>
-							<th>Name</th>
-						    <th>Area</th>
-							<th>Primary VC</th>
-							<th>Boxes</th>
-							<th>Due Date</th>
-							<th>Status</th>
-                            <th>Rent</th>
-							<th>Tools</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-					<tfoot>
-					<tr>
-							<th>Subs No</th>
-							<th>Name</th>
-						    <th>Area</th>
-							<th>Primary VC</th>
-							<th>Boxes</th>
-							<th>Due Date</th>
-							<th>Status</th>
-                            <th>Rent</th>
-							<th>Tools</th>
-						</tr>
-					</tfoot>
+								<th>Subs No</th>
+								<th>Name</th>
+								<th>Area</th>
+								<th>Primary VC</th>
+								<th>Boxes</th>
+								<th>Due Date</th>
+								<th>Status</th>
+								<th>Rent</th>
+								<th>Tools</th>
+							</tr>
+						</tfoot>
 				
-				</table>
+					</table>
 				</div>
             
 			<!-- <style>

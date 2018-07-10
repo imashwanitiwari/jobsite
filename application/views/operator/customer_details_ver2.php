@@ -307,24 +307,25 @@
                 <div id="collapse5" class="panel-collapse collapse in">
 
 
-                   <div class="panel-body">            
-                        <table class="table table-bordered table-responsive">
+                   <div class="panel-body"> 
+                   <div class="table-responsive">           
+                        <table class="table table-bordered " id="pack_history">
+                        <thead>
                             <tr>
-                            <th>Receipt #</th>																		 				
-                            <th>Serial No #</th>
-                            <th>Payment For</th>
+                            <th>Payment On</th>
                             <th>Box #</th>
                             <th>Package Amount</th>
                             <th>Discount</th>
                             <th>Net Amount</th>
                             <th>VC #</th>
-                            <th> Status</th>
+                            <th>Status</th>
                             <th>Tools</th>
                             </tr>
-
+                        </thead>    
+                        <tbody></tbody>
                         </table>
 
-
+                    </div>
                     </div>
 
                        
@@ -579,6 +580,9 @@
 
                      ]
          });
+
+
+         $("#pack_history").DataTable({});
 
        });
        
