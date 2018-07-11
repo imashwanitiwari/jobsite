@@ -61,7 +61,7 @@ class Reports extends CI_Controller
      public function due_customers(){
          if($this->api->authentication())
          {   
-            if(isset($_POST['AREA_ID'], $_POST['DUE_DATE'], $_POST['MIN_BAL'], $_POST['MAX_BAL'] ,$_POST['BAL_TYPE'], $_POST['OP_ID']))
+            if(isset($_POST['AREA_ID'], $_POST['DUE_DATE'], $_POST['MIN_BAL'], $_POST['MAX_BAL'] ,$_POST['BAL_TYPE'], $_POST['OP_ID']) && !in_array("",$_POST))
             {
                 $false_value = "N/A";
                 $false_clause = "NOT IN";
@@ -82,7 +82,7 @@ class Reports extends CI_Controller
                         $bal_query = "accouting_ledgers.AMOUNT <= ".$_POST['MAX_BAL'];
                         break;
                     default:
-                        $area_clause = $true_claue;
+                        $bal_query = 1;
                         break;
                 }
                 if($data = $this->reports_model->due_customers($area_clause, $due_date_clause, $bal_query))
