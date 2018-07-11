@@ -19,7 +19,8 @@ $this->load->view('include/footer');
             ->join('subscriber_pairing_packs','subscriber_pairing_packs.SUBSCRIBER_ID=subscribers.ID')
             ->join('mso_op_pairing','mso_op_pairing.ID=subscriber_pairing_packs.PAIRING_ID')
             ->join('pack_activation','pack_activation.ID=subscriber_pairing_packs.PACK_ACT_ID')
-            ->join('company_vc','company_vc.ID=mso_op_pairing.VC_ID');
+            ->join('company_vc','company_vc.ID=mso_op_pairing.VC_ID')
+            ->where('subscribers.IS_DELETED',0);
 
 
             echo $this->datatables->generate();
