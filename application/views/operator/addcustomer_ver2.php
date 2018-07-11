@@ -428,10 +428,10 @@
 																for($i=0;$i<sizeof($products);$i++){
 																	?>
 																	<tr>
-																    <td><input type="checkbox" class="from-control choose_product" name="check<?php echo $i?>" value="1"></td>
+																    <td><input type="checkbox" class="form-control choose_product" name="check<?php echo $i?>" value="1"></td>
 
 																	<td><?php echo $products[$i]['NAME']?></td>
-																	<td><input type="text" class="from-control quantity" name="quantity<?php echo $i?>"  id="quantity<?php echo $i?>" disabled>
+																	<td><input type="text" class="form-control quantity" name="quantity<?php echo $i?>"  id="quantity<?php echo $i?>" disabled>
 																	<input type="hidden" name="PRODUCT_ID<?php echo $i?>" value="<?php echo $products[$i]['ID']?>">
 																	
 																	
@@ -620,7 +620,7 @@
 									 $("#index").val(0);
 									  $.ajax({
 										  type: "POST",
-											  url: "http://localhost/dcntv-app/operator/add_customer/show_mso_packs_ala",
+											  url: "<?php echo base_url('operator/add_customer/show_mso_packs_ala')?>",
 											  data: { ID: $(this).val() },
 											  success: function(result)
 									   {
@@ -702,15 +702,13 @@
 																'<h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-account-box mr-10"></i>Package Details</h6>'+
 																'<hr class="light-grey-hr"/>'+
 															
-															'<div class="row" id="pack_ala_append'+$("#q").val()+'">'+
+															'<div class="row" id="pack_append'+$("#q").val()+'">'+
+															'</div>'+
+															'<hr class="light-grey-hr"/>'+
+															'<div class="row" id="ala_append'+$("#q").val()+'">'+
 															'</div>'
+																
 															
-																
-																
-																
-																
-																
-																
 																
 																);
 

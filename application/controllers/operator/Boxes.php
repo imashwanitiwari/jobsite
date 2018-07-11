@@ -63,7 +63,7 @@ public function add_box_stock(){
         'CONNECTION_TYPE'=>0
         
    );
-   $this->db->insert('mso_op_pairing', $data3[$l-1]);
+   $this->db->insert('mso_op_pairing', $data3);
 
  }
  

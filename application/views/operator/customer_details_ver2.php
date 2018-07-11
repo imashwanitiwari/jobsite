@@ -205,7 +205,8 @@
 
 
                    <div class="panel-body">            
-                        <table class="table table-bordered table-responsive">
+                        <table class="table table-bordered table-responsive" id="pay_card">
+                           <thead> 
                             <tr>
                             <th>Months</th>				 				
                             <th>Transaction Time</th>
@@ -217,7 +218,7 @@
                             <th>Receipt#</th>
                             <th>Lineman</th>
                             </tr>
-
+                            </thead> 
                         </table>
 
 
@@ -306,24 +307,25 @@
                 <div id="collapse5" class="panel-collapse collapse in">
 
 
-                   <div class="panel-body">            
-                        <table class="table table-bordered table-responsive">
+                   <div class="panel-body"> 
+                   <div class="table-responsive">           
+                        <table class="table table-bordered " id="pack_history">
+                        <thead>
                             <tr>
-                            <th>Receipt #</th>																		 				
-                            <th>Serial No #</th>
-                            <th>Payment For</th>
+                            <th>Payment On</th>
                             <th>Box #</th>
                             <th>Package Amount</th>
                             <th>Discount</th>
                             <th>Net Amount</th>
                             <th>VC #</th>
-                            <th> Status</th>
+                            <th>Status</th>
                             <th>Tools</th>
                             </tr>
-
+                        </thead>    
+                        <tbody></tbody>
                         </table>
 
-
+                    </div>
                     </div>
 
                        
@@ -561,6 +563,26 @@
 
 
          });
+
+         $("#pay_card").DataTable({
+
+            "ajax":{
+                              "type":"post",
+                               "url":"<?php echo base_url('operator/customers/payment_card')?>",
+                              "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
+                     },
+
+
+                     "columns":[
+                        { "data": "BOX_NO" },
+                        { "data": "VC_NO" },
+                        { "data": "STATUS",}
+
+                     ]
+         });
+
+
+         $("#pack_history").DataTable({});
 
        });
        

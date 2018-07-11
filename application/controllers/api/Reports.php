@@ -63,11 +63,11 @@ class Reports extends CI_Controller
          {   
             if(isset($_POST['AREA_ID'], $_POST['DUE_DATE'], $_POST['MIN_BAL'], $_POST['MAX_BAL'] ,$_POST['BAL_TYPE'], $_POST['OP_ID']) && !in_array("",$_POST))
             {
-                $false_value = "N/A";
+                $false_value = "0";
                 $false_clause = "NOT IN";
                 $true_claue = "IN";
                 $area_clause = ($_POST['AREA_ID'] == $false_value) ? $false_clause : $true_claue;
-                $due_date_clause = ($_POST['DUE_DATE'] == $false_value) ? "<" : "NOT LIKE";
+                $due_date_clause = ($_POST['DUE_DATE'] == $false_value) ? "NOT LIKE" : ">";
                 switch ($_POST['BAL_TYPE']) {
                     case $false_value:
                         $bal_query = 1;
