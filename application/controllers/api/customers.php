@@ -8,6 +8,7 @@ class Customers extends CI_Controller
             $this->load->library('api');
             $this->load->library('form_validation');
             $this->load->model('insert');
+            $this->load->model('api/Customers_model');
             $this->load->model('where');
         }
     public function delete_customer($cid = null, $op_id = null, $del_state = null)
@@ -30,6 +31,32 @@ class Customers extends CI_Controller
                     echo $this->api->errors(102);
                 }
             }
+            else{
+                echo $this->api->errors(101);
+            }
+        }
+        else{
+            echo $this->api->errors(100);
+        }
+    }
+    public function deleted_cutomer_list($op_id = null)
+    {
+        if($this->api->authentication())
+        {
+            if($op_id != null)
+            {
+                    if($data = $this->Customers_model->deleted_customers($op_id))
+                        {
+                            foreach((array)$data as $data):
+                                $response['data'][] = $data;
+                            endforeach;
+                           echo json_encode(array("errors"=>array("count"=>0,null), "status"=>1,$response));
+                        }
+                    else {
+                        echo $this->api->errors(102);
+                    }
+            }
+            
             else{
                 echo $this->api->errors(101);
             }
