@@ -16,7 +16,7 @@ class Reports_model extends CI_Model {
                                         " AND accouting_ledgers.AMOUNT_TYPE = 1 AND mop.BOX_SUB_ID = 1 AND s.OP_ID = ".$_POST['OP_ID']." AND ".$bal_query);
                 if($query->num_rows()>0)
                     {
-                        return $query->result_array;
+                        return $query->result_array();
                     }
                     else {
                         return false;

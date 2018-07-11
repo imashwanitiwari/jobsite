@@ -76,10 +76,10 @@ class Reports extends CI_Controller
                         $bal_query = "accouting_ledgers.AMOUNT BETWEEN ".$_POST['MIN_BAL']." AND ".$_POST['MAX_BAL'];
                         break;
                     case "2" :
-                        $bal_query = "accouting_ledgers.AMOUNT > ".$_POST['MIN_BAL'];
+                        $bal_query = "accouting_ledgers.AMOUNT >= ".$_POST['MIN_BAL'];
                         break;
                     case "3" :
-                        $bal_query = "accouting_ledgers.AMOUNT < ".$_POST['MAX_BAL'];
+                        $bal_query = "accouting_ledgers.AMOUNT <= ".$_POST['MAX_BAL'];
                         break;
                     default:
                         $area_clause = $true_claue;
