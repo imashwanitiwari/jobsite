@@ -112,7 +112,7 @@ var tablee=$('#customer').DataTable(
         }},
         { "data": "AMOUNT" },
         { "data": "SUBSCRIPTION_NO" ,"searchable":false ,"render": function ( data, type, row ) {
-            return ' <div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tools <span class="caret"></span></button><ul class="dropdown-menu" role="menu" aria-labelledby="menu1"><li role="presentation"><a role="menuitem" tabindex="-1"><button class="pay" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="border:none;background:none">Pay</button></a></li><li role="presentation"><a role="menuitem" tabindex="-1"><form action="customers/view_details" method="POST"><input type="hidden" name="CUSTOMER_ID" value="'+row.IDD+'"><button style="border:none;background:none">View Details</button></form></a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/edit_customer?SUBSCRIBER_ID='+row.IDD+'">Edit Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="#">Split Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/add_boxes?SUBS_NO='+row.SUBSCRIPTION_NO+' & NAME='+row.NAME+' & SUBSCRIBER_ID='+row.IDD+' ">Add Boxes</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./complaints?SUBSCRIBER_ID='+row.IDD+'">Add Complaint</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li></ul></div></div>';
+            return ' <div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tools <span class="caret"></span></button><ul class="dropdown-menu" role="menu" aria-labelledby="menu1"><li role="presentation"><a role="menuitem" tabindex="-1"><button class="pay" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="border:none;background:none">Pay</button></a></li><li role="presentation"><a role="menuitem" tabindex="-1"><form action="customers/view_details" method="POST"><input type="hidden" name="CUSTOMER_ID" value="'+row.IDD+'"><button style="border:none;background:none">View Details</button></form></a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/edit_customer?SUBSCRIBER_ID='+row.IDD+'">Edit Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="#">Split Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/add_boxes?SUBS_NO='+row.SUBSCRIPTION_NO+' & NAME='+row.NAME+' & SUBSCRIBER_ID='+row.IDD+' ">Add Boxes</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./complaints?SUBSCRIBER_ID='+row.IDD+'">Add Complaint</a></li><li role="presentation"><a role="menuitem" tabindex="-1" ><button class="delete"  data-whatever="@mdo" style="border:none;background:none">Delete</button></a></li></ul></div></div>';
      }}
         
                 ]
@@ -161,7 +161,29 @@ var tablee=$('#customer').DataTable(
         $("#AREA_ID").val(data['AREA_ID']);       
     } );
 
-  
+    $('#customer tbody').on( 'click', '.delete', function () {
+         var data = tablee.row( $(this).parents('tr') ).data();
+
+        $.ajax({
+            url:"../api/customers/delete_customer/"+data['IDD']+"/"+$("#OP_ID").val()+"/1",
+            type:"POST",
+            data:{"api_key":"1234"},
+            success:function(response)
+            {
+               
+              alert('customer deletd successfuly');
+              
+              tablee.row( $(this).parents('tr') ).remove().draw();
+        
+        
+            },
+
+            error:function(response){
+                alert('some error occured');
+            }
+        });
+              
+    } );
     //post balance count
     $("#PAYING").focusout(function(){
         var paying = Number($("#PAYING").val());
