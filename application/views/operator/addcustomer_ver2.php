@@ -428,10 +428,10 @@
 																for($i=0;$i<sizeof($products);$i++){
 																	?>
 																	<tr>
-																    <td><input type="checkbox" class="from-control choose_product" name="check<?php echo $i?>" value="1"></td>
+																    <td><input type="checkbox" class="form-control choose_product" name="check<?php echo $i?>" value="1"></td>
 
 																	<td><?php echo $products[$i]['NAME']?></td>
-																	<td><input type="text" class="from-control quantity" name="quantity<?php echo $i?>"  id="quantity<?php echo $i?>" disabled>
+																	<td><input type="text" class="form-control quantity" name="quantity<?php echo $i?>"  id="quantity<?php echo $i?>" disabled>
 																	<input type="hidden" name="PRODUCT_ID<?php echo $i?>" value="<?php echo $products[$i]['ID']?>">
 																	
 																	

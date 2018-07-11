@@ -32,7 +32,7 @@
 										<div class="row">
 											<div class="col-sm-12 col-xs-12">
 												<div class="form-wrap">
-													<form action="<?php echo site_url('operator/customers/find_due_cust') ;?>" id="add_customer" method="post">
+													<form action="" id="due_customer" method="">
 														<div class="form-body">
 															
 															<hr class="light-grey-hr"/>
@@ -42,8 +42,8 @@
 																<div class="col-md-3">
 																	<div class="form-group">
 																		<label class="control-label mb-10">Area Wise</label>
-																		<select class="form-control" name="AREA_ID" id="">
-																		      <option value="null">--Do Not Use This Criteria--</option>
+																		<select class="form-control" name="AREA_ID" id="AREA_ID">
+																		      <option value="-1">--Do Not Use This Criteria--</option>
 																			 <?php option_dif_where('areas','OP_ID='.$_SESSION['dcn_id'] ,'ID','NAME')?>
 																			
 																		</select>
@@ -53,7 +53,7 @@
 																	<div class="form-group">
 																		<label class="control-label mb-10">Due Date Wise</label>
 																		
-																		<select class="form-control" name="DATE_WISE" id="">
+																		<select class="form-control" name="DATE_WISE" id="DATE_WISE">
 																		      <option value="null">--ALL--</option>
 																			  <option value="1">1</option>
 																			  <option value="2">2</option>
@@ -90,41 +90,21 @@
 																	</div>
 																</div>
 																<div class="col-md-3">
+																
 																	<div class="form-group">
-																		<label class="control-label mb-10">Month Wise</label>
-																		
-																		<select class="form-control" name="BILL_DUES_LIMIT" id="BILL_DUES_LIMIT">
-																		      <option value="null">--ALL--</option>
-																			  <option value="1">Jan</option>
-																			  <option value="2">Feb</option>
-																			  <option value="3">Mar</option>
-																			  <option value="4">Apr</option>
-																			  <option value="5">May</option>
-																			  <option value="6">Jun</option>
-																			  <option value="7">Jul</option>
-																			  <option value="8">Aug</option>
-																			  <option value="9">Sep</option>
-																			  <option value="10">Oct</option>
-																			  <option value="11">Nov</option>
-																			  <option value="12">Dec</option>
-																			  
-																		</select>
+																	
+																		<label class="control-label mb-10">Min Balance</label>
+                                                                        <input type="checkbox" class="balance" name="min_bal>"id="min_bal" value="2" style="width:15px;height:15px">
+                                                                         <input type="text" class="form-control min_max" name="min"  id="min" disabled>																		
 																	</div>
 																</div>
 
 																<div class="col-md-3">
 																	<div class="form-group">
-																		<label class="control-label mb-10">year</label>
-																		<select class="form-control" name="GENDER" id="GENDER">
-																		      <option value="2013">2013</option>
-																			  <option value="2014">2014</option>
-																			  <option value="2013">2015</option>
-																			  <option value="2013">2016</option>
-																			  <option value="2013">2017</option>
-																			  <option value="2018">2018</option>
-																			  <option value="2019">2019</option>
-																			  <option value="2020">2020</option>
-																		</select>
+																	 
+																		<label class="control-label mb-10">Max Balance</label>
+																		<input type="checkbox" class=" balance" name="max_bal" id="max_bal" value="3" style="width:15px;height:15px">
+																		<input type="text" class="form-control min_max" name="max"  id="max" disabled>
 																	</div>
 															    </div>
 															</div>
@@ -165,6 +145,7 @@
 																	</div>
 															    </div>
 																
+																
 															</div>
 															
 															
@@ -172,7 +153,7 @@
 															<!-- /Row -->
 															
 															<div class="form-actions mt-10">
-															<button type="submit" class="btn btn-success  mr-10"> Submit</button>
+															<button type="button" id="search_due" class="btn btn-success  mr-10"> Submit</button>
 															<button type="button" class="btn btn-danger">Cancel</button>
 														</div>
 													</form>
@@ -197,11 +178,11 @@
 											<th>Area</th>
 											<th>Primary VC</th>
 											<th>Due Date</th>
-											<th>Status</th>
+											
 											<th>Contact</th>
 										</tr>
 									</thead>
-						
+						                <tbody></tbody>
 									<tfoot>
 										<tr>
 										    
@@ -211,7 +192,7 @@
 											<th>Area</th>
 											<th>Primary VC</th>
 											<th>Due Date</th>
-											<th>Status</th>
+											
 											<th>Contact</th>
 										</tr>
 									</tfoot>
@@ -221,11 +202,86 @@
 					<script>
 					$(document).ready(function(){
 						
-					$("#due_cust").DataTable();	
+					//$("#due_cust").DataTable();	
+						
+					$("#search_due").click(function(){
+						if($("input[name='min']").val()!='' || $("input[name='max']").val()!=''){
+							
+							if($("input[name='min']").val()!='' && $("input[name='max']").val()!=''){
+								
+								var bal_type=1;
+								var min_bal=$("input[name='min']").val();
+								var max_bal=$("input[name='max']").val();
+							}
+							else if ($("input[name='min']").val()!=''){
+								var bal_type=2;
+								var min_bal=$("input[name='min']").val();
+								var max_bal=0;
+							}
+							
+							else{
+								var bal_type=3;
+							   var min_bal=-0;
+								var max_bal=$("input[name='max']").val();
+							}
+						}
+						
+						else
+						{
+							var bal_type=-1;
+						    var min_bal=0;
+							var max_bal=0;
+						}
 						
 						
+							
+								//alert(result);
+								 $("#due_cust").DataTable({
+									"ajax":{
+										"type":"post",
+										"url":"../../api/reports/due_customers",
+										"data":{"AREA_ID":$("#AREA_ID").val(),"DUE_DATE":$("#DATE_WISE").val(),"MIN_BAL":min_bal,"MAX_BAL":max_bal,"BAL_TYPE":bal_type,"OP_ID":<?php echo $_SESSION['dcn_id']?>,"api_key":"1234"},
+										
+										
+										
+									}, 
+									"destroy":true,
+									"columns": [
+                
+											{ "data": "SUBSCRIPTION_NO" },
+											{ "data": "FIRST_NAME" },
+											{ "data": "ADDRESS" },
+											{ "data": "NAME"},
+											{ "data": "VC_NO" },
+											{ "data" :"BILLING_DAY"},  
+											{ "data": "MOBILE" }
+											
+                                          ]
+									
+									
+									
+									
+								}); 
+							
+							
+							
+							
+							
+						});
+					
+
+                    $(".balance").on("click",function(){
+						
+						if ($(this).is(":checked")) {
+						$(this).closest("div").find('.min_max').prop( "disabled", false ); 
+						}      
+					   else
+					   $(this).closest("div").find('.min_max').prop( "disabled", true ); 
+						
+					})					
 						
 					});
+
 					
 					
 					
