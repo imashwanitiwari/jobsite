@@ -39,7 +39,7 @@ class Dashboard extends MY_Controller {
 		$query7=$this->db->query('select count(ID) as RES_COMPLAINS from complaints where OP_ID ='.$_SESSION['dcn_id'].' AND RESOLVE_DATE IS NOT NULL AND RESOLVE_DATE <>"0000-00-00 00:00:00"');
 		$result7=$query7->row_array();
 
-		$query8=$this->db->query('select count(ID) as PEND_COMPLAINS from complaints where OP_ID ='.$_SESSION['dcn_id'].' AND RESOLVE_DATE IS NULL OR RESOLVE_DATE="0000-00-00 00:00:00"');
+		$query8=$this->db->query('select count(ID) as PEND_COMPLAINS from complaints where OP_ID ='.$_SESSION['dcn_id'].' AND (RESOLVE_DATE IS NULL OR RESOLVE_DATE="0000-00-00 00:00:00")');
 		$result8=$query8->row_array();
 		
 		$final=array($result,$result2,$result3,$result4,$result5,$result6,$result7,$result8);

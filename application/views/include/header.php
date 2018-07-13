@@ -618,12 +618,7 @@ tfoot input {
 						<li>
 							<a href="<?php echo site_url('operator/addStaff/staff_list');?>">Staff List</a>
 						</li>
-						<li>
-							<a href="form-advanced.html">Linemen</a>
-						</li>
-						<li>
-							<a href="form-advanced.html">Sub-operators</a>
-						</li>
+						
 						
 					</ul>
 				</li>

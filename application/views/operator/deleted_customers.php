@@ -24,13 +24,10 @@
 							<tr>
 								<th>Subs No</th>
 								<th>Name</th>
-								<th>Area</th>
 								<th>Address</th>
 								<th>Primary VC</th>
 								<th>Boxes</th>
 								<th>Due Date</th>
-								<th>Status</th>
-								<th>Pack</th>
 								<th>Contact</th>
 								<th>Tools</th>
 							</tr>
@@ -40,13 +37,10 @@
 						<tr>
 								<th>Subs No</th>
 								<th>Name</th>
-								<th>Area</th>
 								<th>Address</th>
 								<th>Primary VC</th>
 								<th>Boxes</th>
 								<th>Due Date</th>
-								<th>Status</th>
-								<th>Pack</th>
 								<th>Contact</th>
 								<th>Tools</th>
 							</tr>
@@ -59,7 +53,27 @@
 			<script>
 			$(document).ready(function(){
 				
-             $("#deleted_cust").DataTable();
+             $("#deleted_cust").DataTable({
+				 
+				 "ajax":{
+										"type":"post",
+										"url":"../../api/customers/deleted_customer_list/"+<?php echo $_SESSION['dcn_id']?>,
+										"data":{"api_key":"1234"},
+						},
+						
+				"columns": [
+                
+											{ "data": "SUBSCRIPTION_NO" },
+											{ "data": "FIRST_NAME" },
+											{ "data": "ADDRESS" },
+											{ "data": "VC_NO" },
+											{ "data" :"BOX_NO"}, 
+											{ "data" :"BILLING_DAY"},
+											{ "data": "MOBILE" },
+											 { "data": null }
+                                          ]		
+				 
+			 });
 				
 				
 			});

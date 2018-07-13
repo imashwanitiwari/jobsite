@@ -131,47 +131,95 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Area</h4>
+          <h4 class="modal-title">Edit Complaint</h4>
         </div>
         <div class="modal-body">
 		<div class="row">
 											<div class="col-sm-12 col-xs-12">
 												<div class="form-wrap">
-													<form class="form-horizontal" method="post" action="<?php echo site_url('');?>">
+													<form class="form-horizontal" method="post" action="<?php echo site_url('operator/complaints/edit_complaint');?>">
 														<div class="form-group">
-															<label for="edit_area" class="col-sm-3 control-label">Area Name*</label>
-															<div class="col-sm-9">
-																<div class="input-group">
-																	<div class="input-group-addon"><i class="icon-user"></i></div>
-																	<input type="text" class="form-control" id="edit_area" name="edit_area" placeholder="Area Name">
+															<label for="ISSUE_ID" class="col-sm-3 control-label">Select Issue*</label>
+															   <div class="col-sm-9">
+																   <div class="input-group">
+																         <div class="input-group-addon"><i class="icon-user"></i></div>
+																          <select id="ISSUE_ID" class="form-control required" name="ISSUE_ID">
+																		   <option value="null">--select--</option>
+																	        <?php option_dif('issue','ID','NAME');?>
+																          </select>
+																	</div>  
 																</div>
+														</div>
+														<div class="form-group">
+															<label for="SUB_ISSUE_ID" class="col-sm-3 control-label">Select Sub Issue</label>
+															<div class="col-sm-9">
+																   <div class="input-group">
+																         <div class="input-group-addon"><i class="icon-user"></i></div>
+																          <select id="SUB_ISSUE_ID" class="form-control required" name="SUB_ISSUE_ID">
+																	       
+																          </select>
+																	</div>  
+																</div>
+														</div>
+														<div class="form-group">
+																<label class="col-sm-3 control-label" for="PROBLEM">Problem:</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																		<div class="input-group-addon"><i class="icon-user"></i></div>
+																		<input type="text" class="form-control" id="PROBLEM" name="PROBLEM" placeholder="">
+																	</div>
+															   </div>	
+														</div>
+														<div class="form-group">
+																<label class="col-sm-3 control-label" for="mso">Title:</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																		<div class="input-group-addon"><i class="icon-user"></i></div>
+																		<input type="text" class="form-control" id="TITLE" name="TITLE" placeholder="">
+																	</div>
+															   </div>	
+														</div>
+														
+														
+														<div class="form-group">
+															<label class="col-sm-3 control-label mb-10 text-left">Registration Date</label>
+															<div class="col-sm-9">
+															   <div class='input-group date' id='datetime'>
+																		<span class="input-group-addon">
+																			<span class="fa fa-calendar"></span>
+																		</span>
+																		<input type='text' class="form-control" name="REG_DATE" id="REG_DATE"/>
+																
+															    </div>
 															</div>
 														</div>
 														<div class="form-group">
-															<label for="edit_houses" class="col-sm-3 control-label">Total Houses</label>
-															<div class="col-sm-9">
-																<div class="input-group">
-																	<div class="input-group-addon"><i class="icon-user"></i></div>
-																	<input type="text" class="form-control" id="edit_houses" name="edit_houses" placeholder="Number Of Houses">
-																</div>
-															</div>
+																<label class="col-sm-3 control-label" for="PRIORITY">Select Priority:</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																		<div class="input-group-addon"><i class="icon-user"></i></div>
+																		<input type="range" name="PRIORITY" id="PRIORITY" min="0" max="100">
+																		
+																	</div>
+															   </div>
 														</div>
+														
 														<div class="form-group">
-															<label for="edit_remark" class="col-sm-3 control-label">Remark</label>
-															<div class="col-sm-9">
-																<div class="input-group">
-																	<div class="input-group-addon"><i class="icon-user"></i></div>
-																	<input type="text" class="form-control" id="edit_remark" name="edit_remark" placeholder="Remark">
-																</div>
+																<label class="col-sm-3 control-label" for="mso">RESOLVE DETAILS:</label>
+																<div class="col-sm-9">
+																	<div class="input-group">
+																		<div class="input-group-addon"><i class="icon-user"></i></div>
+																		<input type="text" class="form-control" id="RESOLVE_DETAILS" name="RESOLVE_DETAILS" placeholder="">
+																	</div>
+															   </div>	
+														</div>
+														<input type="hidden" id="COMPP_NO" name="COMPP_NO" value="">
+														<div class="form-group mb-0">
+															<div class="col-sm-offset-3 col-sm-9">
+																<button type="submit" name="add_complaint" id="edit_complaint" class="btn btn-info ">Submit</button>
 															</div>
 														</div>
 														
-														<div class="form-group mb-0">
-															<div class="col-sm-offset-3 col-sm-9">
-																<button type="submit" class="btn btn-info" name="edit_area_submit" <?php if(is_array($_SESSION['dcn_id'])){echo 'disabled';}?>>Submit</button>
-															</div>
-														</div>
-														<input type="hidden" name="AREA_ID" id="AREA_ID" value="">
 													</form>
 												</div>
 											</div>
@@ -190,57 +238,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <script>
 $(document).ready(function(){
 
-/* $.ajax({
 
-       type:"post",
-       dataType:"json",
-       url: "../../api/complaint/get_all_complaint",
-       data:{OP_ID:$("#OP_ID").val(),api_key:"1234",START_LIMIT:"0",END_LIMIT:"50"},
-
-       success:function(result){
-         
-         //alert(res.length); 
-         for(var i=0;i<50;i++){
-
-          $("#getdata").append('<tr><td>'+result['response'][i]['COMP_NO']+'</td>'+
-                               '<td>'+result['response'][i]['VICTIM_ID']+'</td>'+
-                               '<td>'+result['response'][i]['ISSUE_ID']+'</td>'+
-                               '<td>'+result['response'][i]['SUB_ISSUE_ID']+'</td>'+
-                               '<td>'+result['response'][i]['TITLE']+'</td>'+
-                               '<td>'+result['response'][i]['PROBLEM']+'</td>'+
-                               '<td>'+result['response'][i]['REG_DATE']+'</td>'+
-                               '<td>'+result['response'][i]['RESOLVE_DATE']+'</td>'+
-                               '<td>'+result['response'][i]['RESOLVE_DETAILS']+'</td>'+
-                               '<td>'+result['response'][i]['PRIORITY']+'</td>'+
-                               '<td><button type="button" class="btn btn-info edit_comp">EDIT</button></td></tr><br>'
-                               
-          );  
-
-
-        
-         
-}
-
-       },
-
-       error:function(result){
-          alert();
-
-       }
-
-}); */
-
-$("#complaints").DataTable({
+var table=$("#complaints").DataTable({
 
 "ajax":
 {
-  "url":"http://localhost/dcntv-app/api/complaint/get_all_complaint",
+  "url":"http://localhost/dcn/api/complaint/get_all_complaint",
   "type":"post",
   "data":{OP_ID:$("#OP_ID").val(),api_key:"1234",START_LIMIT:"0",END_LIMIT:"50"}
 },
 
 "columns":[{"data":"COMP_NO"},
-{"data":"VICTIM_ID"},
+{"data":"VICTIM_NAME"},
 {"data":"ISSUE_ID"},
 {"data":"SUB_ISSUE_ID"},
 {"data":"TITLE"},
@@ -258,28 +267,51 @@ $("#complaints").DataTable({
     {
     
     "render": function ( data, type, row ) {
-        return '<button type="button" class="btn btn-info edit_area" data-toggle="modal" data-target="#complaint_model"><span class="glyphicon glyphicon-edit"></span></button>';
+        return '<button type="button" class="btn btn-info edit_comp" data-toggle="modal" data-target="#complaint_model"><span class="glyphicon glyphicon-edit"></span></button>';
     },
     "targets": 10
 }
 ]   
 });
 
-$(document).on("click",".edit_comp",function(){
 
-  var row = $(this).closest("tr");       // Finds the closest row <tr> 
-  var tds = row.find("td");             // Finds all children <td> elements
-  alert(tds.eq(1).text());
-
- /*   $.each(tds, function()
-  {                                     // Visits every single <td> element
-    console.log($(this).text());        // Prints out the text within the <td>
-  });  */
-
-//alert();
-
-})
-
+			$(document).on("change","#ISSUE_ID",function(){
+				//alert();
+                                      
+									  var displayResources = $('#SUB_ISSUE_ID');
+									  
+									  $.ajax({type: "POST",
+											  url: "../complaints/show_sub_issue",
+											  data: { ID: $("#ISSUE_ID").val() },
+											  success: function(result)
+									   {
+									
+										  displayResources.html(result);
+  
+										  
+									   },
+										  error:function(result) {
+											  alert('error');
+											  }
+  
+  
+  
+									  });
+  
+								  });
+								 
+$("#complaints tbody").on("click",".edit_comp",function(){
+	
+	var data = table.row( $(this).parents('tr') ).data();
+	$("#ISSUE_ID").val(data['ISSUE_ID']);
+	$("#SUB_ISSUE_ID").val(data['SUB_ISSUE_ID']);
+	$("#PROBLEM").val(data['PROBLEM']);
+	$("#TITLE").val(data['TITLE']);
+	$("#REG_DATE").val(data['REG_DATE']);
+	$("#PRIORITY").val(data['PRIORITY']);
+	$("#RESOLVE_DETAILS").val(data['RESOLVE_DETAILS']);
+	$("#COMPP_NO").val(data['COMP_NO']);
+});
 
 $(document).on("click","#status",function(){
   
