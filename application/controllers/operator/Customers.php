@@ -595,7 +595,7 @@ $this->db->insert('subscriber_pairing_packs', $data2[$i]);
       public function payment_card(){
         $id=$_POST['SUBSCRIBER_ID'];
         $this->load->library('datatables');
-        $this->datatables->select('DR_ID,MONTH(DATE) as MONTH,AMOUNT as MONEY,staff.F_NAME')
+        $this->datatables->select('DR_ID,MONTHNAME(DATE) as MONTH,YEAR(DATE) as YEAR ,DATE ,AMOUNT as MONEY,staff.F_NAME')
         ->from('accounts')
         ->join('staff','staff.ID=accounts.STAFF_ID')
         ->where('CR_ID=(select ID from accouting_ledgers where NAME="CID_'.$id.'") AND DR_ID IN(SELECT ID FROM accouting_ledgers WHERE UNDER IN (SELECT ID FROM accounting_groups where NATURE = "Assets")) GROUP BY MONTH(DATE) ');

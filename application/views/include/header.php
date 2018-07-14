@@ -1149,7 +1149,7 @@ tfoot input {
         $("#check_user").click(function(e){
 
 
-        if(<?php echo is_array($_SESSION['dcn_id'])?>){
+        if(<?php echo is_array($_SESSION['dcn_id']) ? 1 : 0;?>){
 			
 			e.preventDefault();
 

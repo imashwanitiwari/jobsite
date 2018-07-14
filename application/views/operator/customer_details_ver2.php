@@ -574,15 +574,33 @@
 
 
                      "columns":[
-                        { "data": "BOX_NO" },
-                        { "data": "VC_NO" },
-                        { "data": "STATUS",}
-
+                         { "data": null ,
+						 render : function (data, type, row) {
+							 
+							 return row['MONTH']+'-'+row['YEAR'];
+						 }
+						 
+						 
+						 },
+                         { "data": "DATE" },
+                         { "data": "MONEY"},
+                         { "data": null,},
+						 { "data": null,},
+						 { "data": null,},
+						 { "data": null,},
+						 { "data": null,},
+						 { "data": "F_NAME"},
                      ]
          });
 
 
-         $("#pack_history").DataTable({});
+         $("#pack_history").DataTable({
+			 
+			 
+			 
+			 
+			 
+		 });
 
        });
        

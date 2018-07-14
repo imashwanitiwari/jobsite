@@ -172,12 +172,9 @@ class Add_cust_model extends CI_Model{
 	}
 
 	//Start (Amount to be inserted in accounts Table after deducting discount)
-	$final_amount_pack=$final_amount_ala=0;
-	$pack_amount_for_box[0]=0;
-	$ala_amount_for_box[0]=0;
-	$pack_disc_amt_for_box[0]=0;
-	$ala_disc_amt_for_box[0]=0;
-	$final_amt_pack_disc=$final_amt_ala_disc=0;
+	$final_amount_pack=$final_amount_ala=$pack_amount_for_box[0]=$ala_amount_for_box[0]=$pack_disc_amt_for_box[0]=$ala_disc_amt_for_box[0]=$final_amt_pack_disc=$final_amt_ala_disc=0;
+	
+	
 	for($b=1;$b<=$no_of_box;$b++)
 	{
 		$fnl_amt_pack_ex_disc[$b]=0;
@@ -367,6 +364,29 @@ class Add_cust_model extends CI_Model{
 		$this->db->insert('invoice', $pack_invoice);
 		}
 		
+		$tax_query=$this->db->query('select NAME,RATE,ACCOUNT_ID from tax join accouting_ledgers on accouting_ledgers.ID=tax.ACCOUNT_ID where PRODUCT_ID='.$r['ID'].' AND tax.VISIBLE='.$_SESSION['dcn_id']);
+		$tax_query_res=$tax_query->result_array();
+		
+		if(sizeof($tax_query_res)>0){
+			for($tax_pack=0;$tax_pack<sizeof($tax_query_res);$tax_pack++){
+				
+			$pack_tax_invoice=array(
+		
+				'PRODUCT_ID'=>$tax_query_res[$tax_pack]['ACCOUNT_ID'],
+				'QUANTITY' =>1,
+				'INVOICE_NO'=>$result3['INVOICE_NO'],
+				'OP_ID'=> $_SESSION['dcn_id'],
+				'SUBSCRIBER_ID'=> $ID5,
+                'REF' => 'tax'.$reference,
+                'TYPE'=>1,
+				'RATE'=>$tax_query_res[$tax_pack]['RATE']
+		
+		
+			 );
+			 
+			$this->db->insert('invoice', $pack_tax_invoice);
+			}
+		}
 		
 		$query2=$this->db->query('select PACK_ACT_ID,pack_activation.PACK_OR_CHANNEL_ID from subscriber_pairing_packs join pack_activation on pack_activation.ID=subscriber_pairing_packs.PACK_ACT_ID join mso_op_pairing on mso_op_pairing.ID=subscriber_pairing_packs.PAIRING_ID where subscriber_pairing_packs.SUBSCRIBER_ID='.$ID5.' and mso_op_pairing.BOX_SUB_ID='.$insert.' and pack_activation.TYPE=1');
 		$result2=$query2->result_array();
@@ -399,7 +419,7 @@ class Add_cust_model extends CI_Model{
 			'AREA_ID'=>0,
 			'PARTICULAR'=>'TOTAL ALA DISCOUNT BOX'.$insert,
 			'AMOUNT'=>$ala_disc_amt_for_box[$insert],
-			'REFRENCE'=>'disc'.$reference2, 
+			'REFRENCE'=>'disc_'.$reference2, 
 			'OP_ID'=>$_SESSION['dcn_id']
 		
 		
@@ -418,7 +438,32 @@ class Add_cust_model extends CI_Model{
 		);
 		$this->db->insert('invoice', $ala_invoice);
 
+        $tax_query2=$this->db->query('select NAME,RATE,ACCOUNT_ID from tax join accouting_ledgers on accouting_ledgers.ID=tax.ACCOUNT_ID where PRODUCT_ID=3 AND tax.VISIBLE='.$_SESSION['dcn_id']);
+		$tax_query_res2=$tax_query2->result_array();
+		
+		if(sizeof($tax_query_res2)>0){
+			for($tax_pack2=0;$tax_pack2<sizeof($tax_query_res2);$tax_pack2++){
+				
+			$ala_tax_invoice=array(
+		
+				'PRODUCT_ID'=>$tax_query_res2[$tax_pack2]['ACCOUNT_ID'],
+				'QUANTITY' =>1,
+				'INVOICE_NO'=>$result3['INVOICE_NO'],
+				'OP_ID'=> $_SESSION['dcn_id'],
+				'SUBSCRIBER_ID'=> $ID5,
+                'REF' => 'tax'.$reference2,
+                'TYPE'=>1,
+				'RATE'=>$tax_query_res[$tax_pack2]['RATE']
+		
+		
+			 );
+			 
+			$this->db->insert('invoice', $ala_tax_invoice);
 
+	
+		}
+
+       }
 
 	
 		}
