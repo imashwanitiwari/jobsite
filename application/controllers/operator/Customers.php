@@ -19,14 +19,30 @@ $this->load->view('include/footer');
             ->join('subscriber_pairing_packs','subscriber_pairing_packs.SUBSCRIBER_ID=subscribers.ID')
             ->join('mso_op_pairing','mso_op_pairing.ID=subscriber_pairing_packs.PAIRING_ID')
             ->join('pack_activation','pack_activation.ID=subscriber_pairing_packs.PACK_ACT_ID')
-            ->join('company_vc','company_vc.ID=mso_op_pairing.VC_ID');
+            ->join('company_vc','company_vc.ID=mso_op_pairing.VC_ID')
+            ->where('subscribers.IS_DELETED',0);
 
 
             echo $this->datatables->generate();
 
 
             }
+			
+public function due_customers(){
+	
+	$this->load->view('include/header');
+	$this->load->helper('select');
+    $this->load->view('operator/due_customers');
+    $this->load->view('include/footer');
+}			
 
+public function deleted_customers(){
+	
+	$this->load->view('include/header');
+	$this->load->view('operator/deleted_customers');
+    $this->load->view('include/footer');
+	
+}
 public function view_details()
 {
     $this->load->helper('select');
@@ -53,8 +69,11 @@ public function view_details()
             }
 
 public function edit_submit(){
+     //print_r($_POST);
     $this->db->trans_start();
-// print_r($_POST);
+
+$qry_ac=$this->db->query('select ACCOUNT_ID from subscribers where SUBSCRIBER_ID='.$_POST['SUBSCRIBER_ID']);
+$res_ac=$qry_ac->row_array();
     $data=array(
     'SUBSCRIPTION_NO' =>$_POST['SUBSCRIPTION_NO'],
     'SEC_SUBS_NO' =>$_POST['SEC_SUBS_NO'],
@@ -80,7 +99,7 @@ public function edit_submit(){
     'OP_ID' =>$_SESSION['dcn_id'],
     'USER_NAME' =>$_POST['USER_NAME'],
     'PASSWORD' =>$_POST['PASSWORD'],
-    'ACCOUNT_ID'=>0
+    'ACCOUNT_ID'=>$res_ac['ACCOUNT_ID']
 
 );
 
@@ -166,8 +185,7 @@ $this->db->update('subscribers',$data,array('ID' =>$_POST['SUBSCRIBER_ID']));
                 'CHARGE_APPLIED'  => 0,
                 'IS_ADJUSTMENT' =>  0
 
-
-              );
+               );
 
               $this->db->insert('box_tracking',$box_tracking);
 
@@ -225,7 +243,7 @@ $this->db->update('subscribers',$data,array('ID' =>$_POST['SUBSCRIBER_ID']));
 
            }
 
-            $query3=$this->db->query('select STATUS from mso_op_pairing where ID='.explode("-",$_POST['STB_VC_PAIR'.$i])[2]);
+            $query3=$this->db->query('select BOX_SUB_ID,STATUS from mso_op_pairing where ID='.explode("-",$_POST['STB_VC_PAIR'.$i])[2]);
             $result3=$query3->row_array();
             if(!isset($stb_id) && !isset($vc_id)){
 
@@ -256,7 +274,10 @@ $this->db->update('subscribers',$data,array('ID' =>$_POST['SUBSCRIBER_ID']));
             
 
             for($j=0;$j<$PACKS_IN;$j++)
-            {
+            {  
+
+                if(!isset($_POST['PACK_OR_CHANNEL_ID'.$i.$j]))
+                {
                 $data3=array(
 
                 'DISCOUNT_TYPE'=>$_POST['DISCOUNT_TYPE'.$i.$j],
@@ -269,7 +290,86 @@ $this->db->update('subscribers',$data,array('ID' =>$_POST['SUBSCRIBER_ID']));
 
             $this->db->update('pack_activation',$data3,array('ID' =>$_POST['PAC_ACT_ID'.$i.$j]));
 
+           }
+             
+           else
+           {
 
+            $data3=array(
+                
+                'PACK_OR_CHANNEL_ID'=>$_POST['PACK_OR_CHANNEL_ID'.$i.$j],
+                'AMOUNT'=>$_POST['AMOUNT'.$i.$j],
+                'DISCOUNT_TYPE'=>$_POST['DISCOUNT_TYPE'.$i.$j],
+                'DISC_AMOUNT'=>$_POST['DISC_AMOUNT'.$i.$j],
+                'BILLING_CYCLE'=>$_POST['BILLING_CYCLE'.$i.$j],
+                'ACTIVATION_DATE'=>$_POST['ACTIVATION_DATE'.$i.$j],
+                'CLOSING_DATE'=>$_POST['CLOSING_DATE'.$i.$j],
+                'AUTO_RENEW'=>$_POST['AUTO_RENEW'.$i.$j],
+                );
+
+                $this->db->update('pack_activation',$data3,array('ID' =>$_POST['PAC_ACT_ID'.$i.$j]));
+
+            if($_POST['DISCOUNT_TYPE'.$i.$j]==0){
+ 
+                $AMOUNT= (int)$_POST['AMOUNT'.$i.$j]-(int)$_POST['DISC_AMOUNT'.$i.$j];
+            }
+
+            else{
+
+                $AMOUNT= (int)$_POST['AMOUNT'.$i.$j]-((int)$_POST['AMOUNT'.$i.$j]*(int)$_POST['DISC_AMOUNT'.$i.$j])/100;
+
+            }
+             
+        $ac_data=array(
+
+            'DR_ID'=>$res_ac['ACCOUNT_ID'],
+			'CR_ID'=>3,
+			'STAFF_ID'=>0,
+			'AREA_ID'=>0,
+			'PARTICULAR'=>'TOTAL PACK ACTIVATION CHARGE BOX'.$result3['BOX_SUB_ID'],
+			'AMOUNT'=>$AMOUNT,
+			'REFRENCE'=>'packs_'.$_POST['PAC_ACT_ID'.$i.$j], 
+			'OP_ID'=>$_SESSION['dcn_id']
+
+
+              );   
+              
+            $this->db->insert('accounts', $ac_data);  
+
+        $ac_data2=array(
+
+            'DR_ID'=>66,
+			'CR_ID'=>$res_ac['ACCOUNT_ID'],
+			'STAFF_ID'=>0,
+			'AREA_ID'=>0,
+			'PARTICULAR'=>'PACK RETURN',
+			'AMOUNT'=>1,
+			'REFRENCE'=>'packs_'.$_POST['PAC_ACT_ID'.$i.$j], 
+			'OP_ID'=>$_SESSION['dcn_id']
+
+            );
+
+            $qry=$this->db->query('select ID from products where NAME="@packs_'.$_POST['PACK_OR_CHANNEL_ID'.$i.$j].'"');  
+            $rslt=$qry->row_array();
+            
+            $qry2=$this->db->query('select MAX(INVOICE_NO)+1 as INVOICE_NO from invoice where OP_ID='.$_SESSION['dcn_id']);
+		    $rslt2=$qry2->row_array();
+            
+            $inv_data=array(
+
+                'PRODUCT_ID'=>$rslt['ID'],
+				'QUANTITY' =>1,
+				'INVOICE_NO'=>$rslt2['INVOICE_NO'],
+				'OP_ID'=> $_SESSION['dcn_id'],
+				'SUBSCRIBER_ID'=>$_POST['SUBSCRIBER_ID'],
+                'REF' => 'packs_'.$_POST['PAC_ACT_ID'.$i.$j],
+                'TYPE'=>1
+
+                );
+
+            $this->db->insert('invoice',$inv_data);    
+
+           }
 
             }
         }
@@ -472,7 +572,7 @@ $this->db->insert('subscriber_pairing_packs', $data2[$i]);
 
     $this->db->insert('payments', $data);  
     $this->db->trans_complete();
-echo "BOX Added Successfully";	
+    echo "BOX Added Successfully";	
 
         
     }
@@ -490,4 +590,16 @@ echo "BOX Added Successfully";
 
       
 
+
+
+      public function payment_card(){
+        $id=$_POST['SUBSCRIBER_ID'];
+        $this->load->library('datatables');
+        $this->datatables->select('DR_ID,MONTHNAME(DATE) as MONTH,YEAR(DATE) as YEAR ,DATE ,AMOUNT as MONEY,staff.F_NAME')
+        ->from('accounts')
+        ->join('staff','staff.ID=accounts.STAFF_ID')
+        ->where('CR_ID=(select ID from accouting_ledgers where NAME="CID_'.$id.'") AND DR_ID IN(SELECT ID FROM accouting_ledgers WHERE UNDER IN (SELECT ID FROM accounting_groups where NATURE = "Assets")) GROUP BY MONTH(DATE) ');
+        echo $this->datatables->generate();
+
+      }
 }

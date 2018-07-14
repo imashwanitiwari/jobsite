@@ -37,7 +37,105 @@
 					<!-- /Breadcrumb -->
 				</div>
 				<!-- /Title -->
-                
+            <!-- Row -->
+				<div class="row">
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+						<div class="panel panel-default card-view pa-0">
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body pa-0">
+									<div class="sm-data-box bg-red">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+													<span class="txt-light block counter"><span id="no_of_con"></span></span>
+													<span class="weight-500 uppercase-font txt-light block font-13">Total Connections</span>
+												</div>
+												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+												<span class="txt-light block counter"><span id="active_con"></span></span>
+												<span class="weight-500 uppercase-font txt-light block font-13">Active</span>
+												<span class="txt-light block counter"><span id="inactive_con"></span></span>
+												<span class="weight-500 uppercase-font txt-light block font-13">Inactive</span>
+												</div>
+											</div>	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+						<div class="panel panel-default card-view pa-0">
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body pa-0">
+									<div class="sm-data-box bg-yellow">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+													<span class="txt-light block counter"><span id="box_count"></span></span>
+													<span class="weight-500 uppercase-font txt-light block">Boxes</span>
+												</div>
+												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+												<span class="txt-light block counter"><span id="active_box"></span></span>
+												<span class="weight-500 uppercase-font txt-light block font-13">Active</span>
+												<span class="txt-light block counter"><span id="inactive_box"></span></span>
+												<span class="weight-500 uppercase-font txt-light block font-13">Inactive</span>	
+												</div>
+											</div>	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+						<div class="panel panel-default card-view pa-0">
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body pa-0">
+									<div class="sm-data-box bg-green">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+													<span class="txt-light block counter"><span id="complain_count"></span></span>
+													<span class="weight-500 uppercase-font txt-light block">Complaints</span>
+												</div>
+												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+												<span class="txt-light block counter"><span id="resolved_comp"></span></span>
+												<span class="weight-500 uppercase-font txt-light block font-13">Resolved</span>
+												<span class="txt-light block counter"><span id="pending_comp"></span></span>
+												<span class="weight-500 uppercase-font txt-light block font-13">Pending</span>
+													
+												</div>
+											</div>	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+						<div class="panel panel-default card-view pa-0">
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body pa-0">
+									<div class="sm-data-box bg-blue">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+													<span class="txt-light block counter"><span id="dues"></span></span>
+													<span class="weight-500 uppercase-font txt-light block">Dues</span>
+												</div>
+												<div class="col-xs-6 text-center  pl-0 pr-0 pt-25  data-wrap-right">
+												<span class="txt-light block counter"><span id="total"></span></span>
+												<span class="weight-500 uppercase-font txt-light block font-13">Total</span>
+												</div>
+											</div>	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Row -->    
               <!-- Row -->
 				<div class="row">
 					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -217,105 +315,7 @@
 				</div>
 				<!-- /Row -->
 				
-				<!-- Row -->
-				<div class="row">
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-						<div class="panel panel-default card-view pa-0">
-							<div class="panel-wrapper collapse in">
-								<div class="panel-body pa-0">
-									<div class="sm-data-box bg-red">
-										<div class="container-fluid">
-											<div class="row">
-												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
-													<span class="txt-light block counter"><span id="no_of_con"></span></span>
-													<span class="weight-500 uppercase-font txt-light block font-13">Total Connections</span>
-												</div>
-												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
-												<span class="txt-light block counter"><span id="active_con"></span></span>
-												<span class="weight-500 uppercase-font txt-light block font-13">Active</span>
-												<span class="txt-light block counter"><span id="inactive_con"></span></span>
-												<span class="weight-500 uppercase-font txt-light block font-13">Inactive</span>
-												</div>
-											</div>	
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-						<div class="panel panel-default card-view pa-0">
-							<div class="panel-wrapper collapse in">
-								<div class="panel-body pa-0">
-									<div class="sm-data-box bg-yellow">
-										<div class="container-fluid">
-											<div class="row">
-												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
-													<span class="txt-light block counter"><span id="box_count"></span></span>
-													<span class="weight-500 uppercase-font txt-light block">Boxes</span>
-												</div>
-												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
-												<span class="txt-light block counter"><span id="active_box"></span></span>
-												<span class="weight-500 uppercase-font txt-light block font-13">Active</span>
-												<span class="txt-light block counter"><span id="inactive_box"></span></span>
-												<span class="weight-500 uppercase-font txt-light block font-13">Inactive</span>	
-												</div>
-											</div>	
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-						<div class="panel panel-default card-view pa-0">
-							<div class="panel-wrapper collapse in">
-								<div class="panel-body pa-0">
-									<div class="sm-data-box bg-green">
-										<div class="container-fluid">
-											<div class="row">
-												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
-													<span class="txt-light block counter"><span id="complain_count"></span></span>
-													<span class="weight-500 uppercase-font txt-light block">Complaints</span>
-												</div>
-												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
-												<span class="txt-light block counter"><span id="resolved_comp"></span></span>
-												<span class="weight-500 uppercase-font txt-light block font-13">Resolved</span>
-												<span class="txt-light block counter"><span id="pending_comp"></span></span>
-												<span class="weight-500 uppercase-font txt-light block font-13">Pending</span>
-													
-												</div>
-											</div>	
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-						<div class="panel panel-default card-view pa-0">
-							<div class="panel-wrapper collapse in">
-								<div class="panel-body pa-0">
-									<div class="sm-data-box bg-blue">
-										<div class="container-fluid">
-											<div class="row">
-												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
-													<span class="txt-light block counter"><span id="dues"></span></span>
-													<span class="weight-500 uppercase-font txt-light block">Dues</span>
-												</div>
-												<div class="col-xs-6 text-center  pl-0 pr-0 pt-25  data-wrap-right">
-												<span class="txt-light block counter"><span id="total"></span></span>
-												<span class="weight-500 uppercase-font txt-light block font-13">Total</span>
-												</div>
-											</div>	
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Row -->
+				
 				
 				<!-- Row -->
 				<div class="row">
@@ -493,6 +493,7 @@
 								$("#inactive_con").html(result[2]['TOTAL_INACTIVE']);
 								$("#box_count").html(result[3]['BOX_COUNT']);
 								$("#active_box").html(result[4]['ACTIVE_BOX']);
+								$("#inactive_box").html(result[2]['TOTAL_INACTIVE']);
 								$("#complain_count").html(result[5]['COMPLAINS']);
                                 $("#resolved_comp").html(result[6]['RES_COMPLAINS']);
 								$("#pending_comp").html(result[7]['PEND_COMPLAINS']);

@@ -157,6 +157,42 @@
        </div>
        </div>
 
+ <div class="container">
+  
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+        
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Box Tracking</h4>
+            </div>
+            <div class="modal-body table-responsive">
+            <table id="box_track" class="table table-bordered display" style="width:100%">
+            <thead>
+            <tr>
+            <th>BOX NO</th>
+            <th>VC NO</th>
+            <th>Status</th>
+            <th>Date/Time</th>
+            </tr>
+            
+            </thead>
+            </table>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+  
+</div>
+
+
        <div class="container">
        <div class="panel-group">
             <div class="panel panel-default">
@@ -169,7 +205,8 @@
 
 
                    <div class="panel-body">            
-                        <table class="table table-bordered table-responsive">
+                        <table class="table table-bordered table-responsive" id="pay_card">
+                           <thead> 
                             <tr>
                             <th>Months</th>				 				
                             <th>Transaction Time</th>
@@ -181,7 +218,7 @@
                             <th>Receipt#</th>
                             <th>Lineman</th>
                             </tr>
-
+                            </thead> 
                         </table>
 
 
@@ -270,24 +307,25 @@
                 <div id="collapse5" class="panel-collapse collapse in">
 
 
-                   <div class="panel-body">            
-                        <table class="table table-bordered table-responsive">
+                   <div class="panel-body"> 
+                   <div class="table-responsive">           
+                        <table class="table table-bordered " id="pack_history">
+                        <thead>
                             <tr>
-                            <th>Receipt #</th>																		 				
-                            <th>Serial No #</th>
-                            <th>Payment For</th>
+                            <th>Payment On</th>
                             <th>Box #</th>
                             <th>Package Amount</th>
                             <th>Discount</th>
                             <th>Net Amount</th>
                             <th>VC #</th>
-                            <th> Status</th>
+                            <th>Status</th>
                             <th>Tools</th>
                             </tr>
-
+                        </thead>    
+                        <tbody></tbody>
                         </table>
 
-
+                    </div>
                     </div>
 
                        
@@ -371,11 +409,7 @@
          $("#invoice").DataTable({
                      "ajax":{
                               "type":"post",
-<<<<<<< HEAD
-                               "url":"http://localhost/dcn/api/invoice/get_invoice",
-=======
-                               "url":"<?= base_url('api/invoice/get_invoice')?>",
->>>>>>> a899e9c2173c72722336e2ee6270fb28915321a1
+                               "url":"<?php echo base_url('api/invoice/get_invoice')?>",
                               "data":{"OP_ID":<?php echo $_SESSION['dcn_id']?>,"api_key":1234,"START_DATE":"2018-05-30 13:27:43","END_DATE":d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds(),"BY":"SUBSCRIBER_ID","BY_ID":<?php echo $data[0]['ID']?>}
                      },
 
@@ -402,15 +436,11 @@
 
          
 
-         $("#box_details").DataTable({
+        var table= $("#box_details").DataTable({
 
            "ajax":{
                               "type":"post",
-<<<<<<< HEAD
-                               "url":"http://localhost/dcn/operator/boxes/subscriber_boxes",
-=======
-                               "url":"<?= base_url('operator/boxes/subscriber_boxes')?>",
->>>>>>> a899e9c2173c72722336e2ee6270fb28915321a1
+                               "url":"<?php echo base_url('operator/boxes/subscriber_boxes')?>",
                               "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
                      },
 
@@ -420,7 +450,7 @@
                         { "data": "ACTIVATION_DATE" },
                         { "data": "BOX_TYPE" },
                         { "data": "STATUS" },
-                        { "data": null }
+                        { "data": "ID" }
                      ],
 
                      columnDefs : [
@@ -447,7 +477,7 @@
                              { targets : [5],
                                 render : function (data, type, row) {
 
-                             return '<button type="button" class="btn btn-primary">Track</button>';
+                             return '<button type="button" class="btn btn-primary track"  data-toggle="modal" data-target="#myModal">Track</button>';
 
 
                                 }
@@ -462,11 +492,7 @@
 
               "ajax":{
                               "type":"post",
-<<<<<<< HEAD
-                               "url":"http://localhost/dcn/operator/customers/money_load",
-=======
-                               "url":"<?= base_url('operator/customers/money_load')?>",
->>>>>>> a899e9c2173c72722336e2ee6270fb28915321a1
+                               "url":"<?php echo base_url('operator/customers/money_load')?>",
                               "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
                      },
 
@@ -493,6 +519,88 @@
 
 
          });
+
+
+         $("#box_details").on("click",".track",function(){
+
+         var data = table.row( $(this).parents('tr') ).data();
+         $("#box_track").DataTable({
+            destroy: true,
+          "ajax":{
+
+                "url":"<?php echo base_url('operator/boxes/box_tracking')?>",
+                "data": {"PAIRING_ID":data['ID']},
+                "type": "post"
+          },
+
+          "columns":[
+                        { "data": "BOX_NO" },
+                        { "data": "VC_NO" },
+                        { "data": "STATUS",
+                            render : function (data, type, row) {
+                                switch(data) {
+                                        case '0' : return 'DEACTIVATED'; break;
+                                        case '1' : return 'ACTIVATED'; break;
+                                        case '2' : return 'REPAIRED'; break;
+                                        case '3' : return 'VC CHANGED'; break;
+                                        case '4' : return 'STB_CHANGED'; break;
+                                        case '5' : return 'BOX CHANGED'; break;
+                                        default  : return 'N/A';
+                                     }
+                            }
+                        
+                         },
+                        { "data": "DATE_TIME" }
+                        
+                        
+                     ],
+
+            
+
+
+
+         });  
+
+
+         });
+
+         $("#pay_card").DataTable({
+
+            "ajax":{
+                              "type":"post",
+                               "url":"<?php echo base_url('operator/customers/payment_card')?>",
+                              "data":{"SUBSCRIBER_ID":<?php echo $data[0]['ID']?>}
+                     },
+
+
+                     "columns":[
+                         { "data": null ,
+						 render : function (data, type, row) {
+							 
+							 return row['MONTH']+'-'+row['YEAR'];
+						 }
+						 
+						 
+						 },
+                         { "data": "DATE" },
+                         { "data": "MONEY"},
+                         { "data": null,},
+						 { "data": null,},
+						 { "data": null,},
+						 { "data": null,},
+						 { "data": null,},
+						 { "data": "F_NAME"},
+                     ]
+         });
+
+
+         $("#pack_history").DataTable({
+			 
+			 
+			 
+			 
+			 
+		 });
 
        });
        

@@ -63,7 +63,7 @@ class Complaint extends CI_Controller
                     if(isset($_POST['OP_ID'], $_POST['START_LIMIT'], $_POST['END_LIMIT']))//validating all reqiured feild either recived or not
                     {
                         
-                        $data = $this->db->query("SELECT * FROM  complaints WHERE OP_ID ='".$_POST['OP_ID']."' LIMIT ".$_POST['START_LIMIT'].",".$_POST['END_LIMIT']);
+                        $data = $this->db->query("SELECT * FROM  complaints join subscribers on subscribers.ID=complaints.VICTIM_ID WHERE complaints.OP_ID ='".$_POST['OP_ID']."' LIMIT ".$_POST['START_LIMIT'].",".$_POST['END_LIMIT']);
                         $count = $data->num_rows();
                         if($count>0)
                         {
@@ -75,7 +75,7 @@ class Complaint extends CI_Controller
                                 $ISSUE_ID=$issue[0];
                                 $SUB_ISSUE_ID=$issue[1];
                                 $response['data'][] = array("ID"=>$data['ID'],"COMP_NO"=>$data['COMP_NO'],"PROBLEM"=>$data['PROBLEM'],"REG_DATE"=>$data['REG_DATE'],
-                                                                            "VICTIM_ID"=>$data['VICTIM_ID'], "PRIORITY"=>$data['PRIORITY'],"TITLE"=>$data['TITLE'],"ISSUE_ID"=>$ISSUE_ID,"SUB_ISSUE_ID"=>$SUB_ISSUE_ID,
+                                                                            "VICTIM_ID"=>$data['VICTIM_ID'], "VICTIM_NAME"=>$data['FIRST_NAME'],"PRIORITY"=>$data['PRIORITY'],"TITLE"=>$data['TITLE'],"ISSUE_ID"=>$ISSUE_ID,"SUB_ISSUE_ID"=>$SUB_ISSUE_ID,
                                                                             "RESOLVE_DETAILS"=>$data['RESOLVE_DETAILS'],"RESOLVE_DATE"=>$data['RESOLVE_DATE']);
                             endforeach;
                             echo json_encode($response);

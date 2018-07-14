@@ -102,6 +102,42 @@ class Add_cust_model extends CI_Model{
 		  $vc_id[] = $this->db->insert_id();
 		  }
 		  
+		  
+		  // insert data in subscribers table
+		
+
+		$data6= array(
+			'SUBSCRIPTION_NO' =>$_POST['SUBSCRIPTION_NO'],
+			'SEC_SUBS_NO' =>$_POST['SEC_SUBS_NO'],
+			'WALKING_ORDER' =>$_POST['WALKING_ORDER'],
+			'FIRST_NAME' =>$_POST['FIRST_NAME'],
+			'LAST_NAME' =>$_POST['LAST_NAME'],
+			'GENDER' =>$_POST['GENDER'],
+			'PROFESSION' =>$_POST['PROFESSION'],
+			'HOUSE_NO' =>$_POST['HOUSE_NO'],
+			'ADDRESS' =>$_POST['ADDRESS'],
+			'CITY' =>$_POST['CITY'],
+			'STATE' =>$_POST['STATE'],
+			'COUNTRY' =>$_POST['COUNTRY'],
+			'PINCODE' =>$_POST['PINCODE'],
+			'MOBILE' =>$_POST['MOBILE'],
+			'ALT_MOBILE' =>$_POST['ALT_MOBILE'],
+            'PHONE' =>$_POST['PHONE'],
+			'EMAIL' =>$_POST['EMAIL'],
+			'PAN' =>$_POST['PAN'],
+			'ADHAR' =>$_POST['ADHAR'],
+			'GST' =>$_POST['GST'],
+			'AREA_ID' =>$_POST['AREA_ID'],
+			'OP_ID' =>$_POST['OP_ID'],
+            'USER_NAME' =>$_POST['USER_NAME'],
+			'PASSWORD' =>$_POST['PASSWORD'],
+			'ACCOUNT_ID'=>0,
+			'BILLING_DAY'=>$_POST['BILLING_DAY'],
+			'DUE_LIMIT'=>$_POST['BILL_DUES_LIMIT']
+			);
+		$this->db->insert('subscribers', $data6);  
+		$ID5 = $this->db->insert_id();
+		  
 		 // insert data in mso_op_pairing table
 		 for($l=1;$l<=$no_of_box;$l++)
 		  {
@@ -111,6 +147,7 @@ class Add_cust_model extends CI_Model{
 			'STB_ID' =>  $stb_id[$l-1],
 			'VC_ID' => $vc_id[$l-1],
 			'BOX_SUB_ID' =>  $l,
+			'SUBSCRIBER_ID'=> $ID5,
 			'STATUS' =>  1,
 			'CONNECTION_TYPE'=>$_POST['CONNECTION_TYPE']
 			
@@ -135,39 +172,46 @@ class Add_cust_model extends CI_Model{
 	}
 
 	//Start (Amount to be inserted in accounts Table after deducting discount)
-	$final_amount_pack=$final_amount_ala=0;
-	$pack_amount_for_box[0]=0;
-	$ala_amount_for_box[0]=0;
+	$final_amount_pack=$final_amount_ala=$pack_amount_for_box[0]=$ala_amount_for_box[0]=$pack_disc_amt_for_box[0]=$ala_disc_amt_for_box[0]=$final_amt_pack_disc=$final_amt_ala_disc=0;
+	
+	
 	for($b=1;$b<=$no_of_box;$b++)
 	{
-		
+		$fnl_amt_pack_ex_disc[$b]=0;
+		$fnl_amt_ala_ex_disc[$b]=0;
 		 for($d=1;$d<=$packs_in_box[$b-1];$d++)
 	   {  
 
 		 if($_POST['TYPE'.$b.$d]==0)
-		     {
+		     {  
+		 
+		        $fnl_amt_pack_ex_disc[$b]+=(int)$_POST['AMOUNT'.$b.$d];
 				if($_POST['DISCOUNT_TYPE'.$b.$d]==0)
 				{
-			 
+			       
 				   $final_amount_pack+=((int)$_POST['AMOUNT'.$b.$d]-(int)$_POST['DISC_AMOUNT'.$b.$d]);
-		
+		           $final_amt_pack_disc+=(int)$_POST['DISC_AMOUNT'.$b.$d];
+				   
 				}
 		
 				elseif ($_POST['DISCOUNT_TYPE'.$b.$d]==1)
 				{
 		
 					$final_amount_pack+=(int)$_POST['AMOUNT'.$b.$d]-((int)$_POST['AMOUNT'.$b.$d]*(int)$_POST['DISC_AMOUNT'.$b.$d])/100;
-		
+		            $final_amt_pack_disc+=((int)$_POST['AMOUNT'.$b.$d]*(int)$_POST['DISC_AMOUNT'.$b.$d])/100;
+				    
 				}
                  
 
 			 }
 		 elseif($_POST['TYPE'.$b.$d]==1)
-			 {
+			 {  
+			    $fnl_amt_ala_ex_disc[$b]+=(int)$_POST['AMOUNT'.$b.$d];
                 if($_POST['DISCOUNT_TYPE'.$b.$d]==0)
 				{
 			 
 				   $final_amount_ala+=((int)$_POST['AMOUNT'.$b.$d]-(int)$_POST['DISC_AMOUNT'.$b.$d]);
+				   $final_amt_ala_disc+=(int)$_POST['DISC_AMOUNT'.$b.$d];
 		
 				}
 		
@@ -175,7 +219,7 @@ class Add_cust_model extends CI_Model{
 				{
 		
 					$final_amount_ala+=(int)$_POST['AMOUNT'.$b.$d]-((int)$_POST['AMOUNT'.$b.$d]*(int)$_POST['DISC_AMOUNT'.$b.$d])/100;
-		
+		            $final_amt_ala_disc+=((int)$_POST['AMOUNT'.$b.$d]*(int)$_POST['DISC_AMOUNT'.$b.$d])/100;
 				}
 
 
@@ -186,8 +230,9 @@ class Add_cust_model extends CI_Model{
 		} 
 		
 		$pack_amount_for_box[$b]=$final_amount_pack-$pack_amount_for_box[$b-1];
+		$pack_disc_amt_for_box[$b]=$final_amt_pack_disc-$pack_disc_amt_for_box[$b-1];
         $ala_amount_for_box[$b]=$final_amount_ala-$ala_amount_for_box[$b-1];
-
+        $ala_disc_amt_for_box[$b]=$final_amt_ala_disc-$ala_disc_amt_for_box[$b-1];
 	}
 
 	  //*finish (Amount to be inserted in accounts Table after deducting discount)*
@@ -224,41 +269,8 @@ class Add_cust_model extends CI_Model{
 	   }
 		
 
-		// insert data in subscribers table
 		
-
-		$data6= array(
-			'SUBSCRIPTION_NO' =>$_POST['SUBSCRIPTION_NO'],
-			'SEC_SUBS_NO' =>$_POST['SEC_SUBS_NO'],
-			'WALKING_ORDER' =>$_POST['WALKING_ORDER'],
-			'FIRST_NAME' =>$_POST['FIRST_NAME'],
-			'LAST_NAME' =>$_POST['LAST_NAME'],
-			'GENDER' =>$_POST['GENDER'],
-			'PROFESSION' =>$_POST['PROFESSION'],
-			'HOUSE_NO' =>$_POST['HOUSE_NO'],
-			'ADDRESS' =>$_POST['ADDRESS'],
-			'CITY' =>$_POST['CITY'],
-			'STATE' =>$_POST['STATE'],
-			'COUNTRY' =>$_POST['COUNTRY'],
-			'PINCODE' =>$_POST['PINCODE'],
-			'MOBILE' =>$_POST['MOBILE'],
-			'ALT_MOBILE' =>$_POST['ALT_MOBILE'],
-            'PHONE' =>$_POST['PHONE'],
-			'EMAIL' =>$_POST['EMAIL'],
-			'PAN' =>$_POST['PAN'],
-			'ADHAR' =>$_POST['ADHAR'],
-			'GST' =>$_POST['GST'],
-			'AREA_ID' =>$_POST['AREA_ID'],
-			'OP_ID' =>$_POST['OP_ID'],
-            'USER_NAME' =>$_POST['USER_NAME'],
-			'PASSWORD' =>$_POST['PASSWORD'],
-			'ACCOUNT_ID'=>0,
-			'BILLING_DAY'=>$_POST['BILLING_DAY'],
-			'DUE_LIMIT'=>$_POST['BILL_DUES_LIMIT']
-			);
-		$this->db->insert('subscribers', $data6);  
-		$ID5 = $this->db->insert_id();
-		$this->db->insert("accouting_ledgers",["NAME"=>"CID_".$ID5,"UNDER"=>29]);
+		$this->db->insert("accouting_ledgers",["NAME"=>"CID_".$ID5,"UNDER"=>29,"VISIBLE"=>$_SESSION['dcn_id']]);
 		$ACCOUNT_ID=$this->db->insert_id();
 		$this->db->update("subscribers",["ACCOUNT_ID"=>$ACCOUNT_ID],["ID"=>$ID5]);
 		 $pac=1;
@@ -316,14 +328,24 @@ class Add_cust_model extends CI_Model{
 			'STAFF_ID'=>0,
 			'AREA_ID'=>0,
 			'PARTICULAR'=>'TOTAL PACK ACTIVATION CHARGE BOX'.$insert,
-			'AMOUNT'=>$pack_amount_for_box[$insert],
+			'AMOUNT'=>$fnl_amt_pack_ex_disc[$insert],
 			'REFRENCE'=>$reference, 
 			'OP_ID'=>$_SESSION['dcn_id']
 		);
 		$this->db->insert('accounts', $data9);
 
 		
-		
+		$pack_disc=array(
+		    'DR_ID'=>71,
+			'CR_ID'=>$ACCOUNT_ID,
+			'STAFF_ID'=>0,
+			'AREA_ID'=>0,
+			'PARTICULAR'=>'TOTAL PACK DISCOUNT BOX'.$insert,
+			'AMOUNT'=>$pack_disc_amt_for_box[$insert],
+			'REFRENCE'=>'disc_'.$reference, 
+			'OP_ID'=>$_SESSION['dcn_id']
+		);
+		$this->db->insert('accounts', $pack_disc);
 		
 		for($inv=0;$inv<sizeof($result);$inv++){
 			$q=$this->db->query("select ID from products where NAME='@packs_".$result[$inv]['PACK_OR_CHANNEL_ID']."'");
@@ -342,6 +364,29 @@ class Add_cust_model extends CI_Model{
 		$this->db->insert('invoice', $pack_invoice);
 		}
 		
+		$tax_query=$this->db->query('select NAME,RATE,ACCOUNT_ID from tax join accouting_ledgers on accouting_ledgers.ID=tax.ACCOUNT_ID where PRODUCT_ID='.$r['ID'].' AND tax.VISIBLE='.$_SESSION['dcn_id']);
+		$tax_query_res=$tax_query->result_array();
+		
+		if(sizeof($tax_query_res)>0){
+			for($tax_pack=0;$tax_pack<sizeof($tax_query_res);$tax_pack++){
+				
+			$pack_tax_invoice=array(
+		
+				'PRODUCT_ID'=>$tax_query_res[$tax_pack]['ACCOUNT_ID'],
+				'QUANTITY' =>1,
+				'INVOICE_NO'=>$result3['INVOICE_NO'],
+				'OP_ID'=> $_SESSION['dcn_id'],
+				'SUBSCRIBER_ID'=> $ID5,
+                'REF' => 'tax'.$reference,
+                'TYPE'=>1,
+				'RATE'=>$tax_query_res[$tax_pack]['RATE']
+		
+		
+			 );
+			 
+			$this->db->insert('invoice', $pack_tax_invoice);
+			}
+		}
 		
 		$query2=$this->db->query('select PACK_ACT_ID,pack_activation.PACK_OR_CHANNEL_ID from subscriber_pairing_packs join pack_activation on pack_activation.ID=subscriber_pairing_packs.PACK_ACT_ID join mso_op_pairing on mso_op_pairing.ID=subscriber_pairing_packs.PAIRING_ID where subscriber_pairing_packs.SUBSCRIBER_ID='.$ID5.' and mso_op_pairing.BOX_SUB_ID='.$insert.' and pack_activation.TYPE=1');
 		$result2=$query2->result_array();
@@ -361,13 +406,25 @@ class Add_cust_model extends CI_Model{
 			'STAFF_ID'=>0,
 			'AREA_ID'=>0,
 			'PARTICULAR'=>'TOTAL ALA ACTIVATION CHARGE BOX'.$insert,
-			'AMOUNT'=>$ala_amount_for_box[$insert],
+			'AMOUNT'=>$fnl_amt_ala_ex_disc[$insert],
 			'REFRENCE'=>$reference2, 
 			'OP_ID'=>$_SESSION['dcn_id']
 		);
 		$this->db->insert('accounts', $data10);
 
+		$ala_disc=array(
+		    'DR_ID'=>3,
+			'CR_ID'=>$ACCOUNT_ID,
+			'STAFF_ID'=>0,
+			'AREA_ID'=>0,
+			'PARTICULAR'=>'TOTAL ALA DISCOUNT BOX'.$insert,
+			'AMOUNT'=>$ala_disc_amt_for_box[$insert],
+			'REFRENCE'=>'disc_'.$reference2, 
+			'OP_ID'=>$_SESSION['dcn_id']
 		
+		
+		);
+		$this->db->insert('accounts', $ala_disc);
 
 			$ala_invoice=array(
 				'PRODUCT_ID'=>3,
@@ -381,7 +438,32 @@ class Add_cust_model extends CI_Model{
 		);
 		$this->db->insert('invoice', $ala_invoice);
 
+        $tax_query2=$this->db->query('select NAME,RATE,ACCOUNT_ID from tax join accouting_ledgers on accouting_ledgers.ID=tax.ACCOUNT_ID where PRODUCT_ID=3 AND tax.VISIBLE='.$_SESSION['dcn_id']);
+		$tax_query_res2=$tax_query2->result_array();
+		
+		if(sizeof($tax_query_res2)>0){
+			for($tax_pack2=0;$tax_pack2<sizeof($tax_query_res2);$tax_pack2++){
+				
+			$ala_tax_invoice=array(
+		
+				'PRODUCT_ID'=>$tax_query_res2[$tax_pack2]['ACCOUNT_ID'],
+				'QUANTITY' =>1,
+				'INVOICE_NO'=>$result3['INVOICE_NO'],
+				'OP_ID'=> $_SESSION['dcn_id'],
+				'SUBSCRIBER_ID'=> $ID5,
+                'REF' => 'tax'.$reference2,
+                'TYPE'=>1,
+				'RATE'=>$tax_query_res[$tax_pack2]['RATE']
+		
+		
+			 );
+			 
+			$this->db->insert('invoice', $ala_tax_invoice);
 
+	
+		}
+
+       }
 
 	
 		}

@@ -1,5 +1,60 @@
+var base_url = window.location.pathname;
+function add_tax(tax_id,product_id,op_id,task)
+    {
+        var name = $("#"+tax_id).text();
+        var rate = name.split("@");
+        var rate = rate[1];
+        var rate = rate.split("%");
+        var rate = rate[0];
+        switch (task) {
+            case 1:
+                var pre_url = "add_tax";
+                var msg = "Added";
+                var msg1 = "Add";
+                var data = {"api_key":"1234","OP_ID":op_id,"PRODUCT_ID":product_id,"ACCOUNT_ID":tax_id,"RATE":rate,"RATE_TYPE":1}
+                var btn_type = "#5cb85c";
+                break;
+            case 2:
+                var pre_url = "remove_tax";
+                var msg = "Removed"
+                var msg1 = "Remove"
+                var data = {"api_key":"1234","OP_ID":op_id,"PRODUCT_ID":product_id,"ACCOUNT_ID":tax_id,"RATE":rate,"RATE_TYPE":1};
+                var btn_type = "#d9534f";
+                break;
+        }
+        swal({
+            title: "Are you sure?",
+            text: "To "+msg1+" "+name+" Tax",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: btn_type,
+            confirmButtonText: "Yes, "+msg1+" it!",
+            closeOnConfirm: false
+          },
+          function(){
+        $.ajax({
+            url:"../../api/invoice/"+pre_url,
+            type:"POST",
+            dataType:"json",
+            data:{"api_key":"1234","OP_ID":op_id,"PRODUCT_ID":product_id,"ACCOUNT_ID":tax_id,"RATE":rate,"RATE_TYPE":1},
+            success:function(response)
+            {
+                if(response.status==1)
+                {
+                    swal("Added", "This Tax has been "+msg+" successfully ", "success");  
+                }
+                else
+                {
+                    swal("Failed", "This Tax did not "+msg+". Please Try again ", "error");  
+                }
+            }
+        });
+        // alert("done");
+    });
+    }
+   
 $(document).ready( function () {
-
+    
     $('#customer tfoot th').each( function (i) {
         var title = $('#customer thead th').eq( $(this).index() ).text();
         $(this).html( '<input type="text" placeholder="Search '+title+'" data-index="'+i+'" />' );
@@ -57,7 +112,7 @@ var tablee=$('#customer').DataTable(
         }},
         { "data": "AMOUNT" },
         { "data": "SUBSCRIPTION_NO" ,"searchable":false ,"render": function ( data, type, row ) {
-            return ' <div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tools <span class="caret"></span></button><ul class="dropdown-menu" role="menu" aria-labelledby="menu1"><li role="presentation"><a role="menuitem" tabindex="-1"><button class="pay" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="border:none;background:none">Pay</button></a></li><li role="presentation"><a role="menuitem" tabindex="-1"><form action="customers/view_details" method="POST"><input type="hidden" name="CUSTOMER_ID" value="'+row.IDD+'"><button style="border:none;background:none">View Details</button></form></a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/edit_customer?SUBSCRIBER_ID='+row.IDD+'">Edit Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="#">Split Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/add_boxes?SUBS_NO='+row.SUBSCRIPTION_NO+' & NAME='+row.NAME+' & SUBSCRIBER_ID='+row.IDD+' ">Add Boxes</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./complaints?SUBSCRIBER_ID='+row.IDD+'">Add Complaint</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li></ul></div></div>';
+            return ' <div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tools <span class="caret"></span></button><ul class="dropdown-menu" role="menu" aria-labelledby="menu1"><li role="presentation"><a role="menuitem" tabindex="-1"><button class="pay" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="border:none;background:none">Pay</button></a></li><li role="presentation"><a role="menuitem" tabindex="-1"><form action="customers/view_details" method="POST"><input type="hidden" name="CUSTOMER_ID" value="'+row.IDD+'"><button style="border:none;background:none">View Details</button></form></a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/edit_customer?SUBSCRIBER_ID='+row.IDD+'">Edit Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="#">Split Details</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./customers/add_boxes?SUBS_NO='+row.SUBSCRIPTION_NO+' & NAME='+row.NAME+' & SUBSCRIBER_ID='+row.IDD+' ">Add Boxes</a></li><li role="presentation"><a role="menuitem" tabindex="-1" href="./complaints?SUBSCRIBER_ID='+row.IDD+'">Add Complaint</a></li><li role="presentation"><a role="menuitem" tabindex="-1" ><button class="delete"  data-whatever="@mdo" style="border:none;background:none">Delete</button></a></li></ul></div></div>';
      }}
         
                 ]
@@ -106,7 +161,29 @@ var tablee=$('#customer').DataTable(
         $("#AREA_ID").val(data['AREA_ID']);       
     } );
 
-  
+    $('#customer tbody').on( 'click', '.delete', function () {
+         var data = tablee.row( $(this).parents('tr') ).data();
+
+        $.ajax({
+            url:"../api/customers/delete_customer/"+data['IDD']+"/"+$("#OP_ID").val()+"/1",
+            type:"POST",
+            data:{"api_key":"1234"},
+            success:function(response)
+            {
+               
+              alert('customer deletd successfuly');
+              
+              tablee.row( $(this).parents('tr') ).remove().draw();
+        
+        
+            },
+
+            error:function(response){
+                alert('some error occured');
+            }
+        });
+              
+    } );
     //post balance count
     $("#PAYING").focusout(function(){
         var paying = Number($("#PAYING").val());
@@ -526,9 +603,94 @@ var tablee=$('#customer').DataTable(
            });    */ 
 
           
+          var tax_table = $("#add_tax_table").DataTable({
+            //"processing": true,
+            //"serverSide": true,
+      
+            "ajax":
+             {
+                
+              "url":"get_products",
+               "type":"POST"
+            },
+           
+              
+            "columns": [
+              { "data": "NAME" },
+              {render : function (data, type, row,meta) {
+                return "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-whatever='@mdo'><i class='fa fa-pencil text-inverse m-r-10'></i></button>";
+               
+           },"searchable":false}
+            ]
+              
+          });
+
+          $('#add_tax_table tbody').on( 'click', 'button', function () {
+            $("#add_tax_table2 tbody").html("");
+            var data = tax_table.row( $(this).parents('tr') ).data();
+            var id = data.ID;
+            $.ajax({
+                "url":"get_taxes/"+id+"/2",
+                "type":"POST",
+                "dataType":"json",
+                "success":function(response){
+                    for(i=0;i<=response.data.length;i++)
+                    {
+                        
+                        $("#add_tax_table2 #tbody1").append(
+                            "<tr>"
+                                +"<td id='"+response.data[i].ID+"'>"+response.data[i].NAME+"</td>"
+                                +"<td>"+'<button onclick=add_tax('+response.data[i].ID+','+id+','+response.op_id+',1)>Add</button></td>'
+                            +"</tr>"
+                            
+                        );
+
+                    }
+                }
+            });
+            $.ajax({
+                "url":"get_taxes/"+id+"/1",
+                "type":"POST",
+                "dataType":"json",
+                "success":function(response){
+                    for(i=0;i<=response.data.length;i++)
+                    {
+                        
+                        $("#add_tax_table2 #tbody2").append(
+                            "<tr>"
+                                +"<td id='"+response.data[i].ID+"'>"+response.data[i].NAME+"</td>"
+                                +"<td>"+'<button onclick=add_tax('+response.data[i].ID+','+id+','+response.op_id+',2)>Remove</button></td>'
+                            +"</tr>"
+                            
+                        );
+
+                    }
+                }
+            });
+          });
           
-
-
+        //   $("#add_tax_table2").DataTable({
+        //     //"processing": true,
+        //     //"serverSide": true,
+      
+        //     "ajax":
+        //      {
+                
+        //       "url":"get_taxes",
+        //        "type":"POST"
+        //     },
+           
+              
+        //     "columns": [
+        //       { "data": "NAME" },
+        //       {render : function (data, type, row,meta) {
+        //         return "<button type='button'> Add</button>";
+               
+        //    },"searchable":false}
+        //     ]
+              
+        //   });
+ 
 } );
 
 

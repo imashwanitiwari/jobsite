@@ -71,7 +71,11 @@ $(document).ready(function(){
 	<!-- datatables JS-->
 	<script src="<?php echo base_url('js/tables.js'); ?>"></script> 
 
-    
+	<!-- Data table JavaScript -->
+	    <script src="<?php echo base_url('vendors/bower_components/moment/min/moment.min.js')?>"></script>
+		<script src="<?php echo base_url('vendors/bower_components/FooTable/compiled/footable.min.js')?>" type="text/javascript"></script>
+		<!--<script src="<?php echo base_url('dist/js/footable-data.js')?>"></script> !-->
+		
 	
     <!-- Moment JavaScript -->
 	<script src="<?php echo base_url('vendors/bower_components/moment/min/moment-with-locales.min.js'); ?>"></script>

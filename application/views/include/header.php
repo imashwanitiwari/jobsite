@@ -537,7 +537,7 @@ tfoot input {
 							<a href="<?php echo site_url('operator/add_customer')?>" id="check_user">Add customer</a>
 						</li>
 						<li>
-							<a href="notifications.html">Deleted Customers</a>
+							<a href="<?php echo site_url('operator/customers/deleted_customers')?>">Deleted Customers</a>
 						</li>
 						
 					</ul>
@@ -564,7 +564,7 @@ tfoot input {
 					<a  href="javascript:void(0);" data-toggle="collapse" data-target="#report"><div class="pull-left"><i class="zmdi zmdi-edit mr-20"></i><span class="right-nav-text">Reports</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 					<ul id="report" class="collapse collapse-level-1 two-col-list">
 						<li>
-							<a href="form-element.html">Due Customers</a>
+							<a href="<?php echo site_url('operator/customers/due_customers');?>">Due Customers</a>
 						</li>
 						<li>
 							<a href="form-layout.html">Full Status</a>
@@ -618,12 +618,7 @@ tfoot input {
 						<li>
 							<a href="<?php echo site_url('operator/addStaff/staff_list');?>">Staff List</a>
 						</li>
-						<li>
-							<a href="form-advanced.html">Linemen</a>
-						</li>
-						<li>
-							<a href="form-advanced.html">Sub-operators</a>
-						</li>
+						
 						
 					</ul>
 				</li>
@@ -1154,7 +1149,7 @@ tfoot input {
         $("#check_user").click(function(e){
 
 
-        if(<?php echo is_array($_SESSION['dcn_id'])?>){
+        if(<?php echo is_array($_SESSION['dcn_id']) ? 1 : 0;?>){
 			
 			e.preventDefault();
 
