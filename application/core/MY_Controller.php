@@ -4,9 +4,9 @@
             public function __construct()
                 {
                     parent::__construct();
-					if(!$this->session->has_userdata('dcn_signed_in'))
+					if(!$this->session->has_userdata('user_signed_in'))
 						{
-							return redirect('home');
+							return redirect('login/user_login');
 						}
                 }
         }

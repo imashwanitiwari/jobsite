@@ -1,107 +1,170 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');?>
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			<style>
+body {font-family: Arial, Helvetica, sans-serif;}
 
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
 
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
 
-    <head>
-        <meta charset="utf-8">
+button:hover {
+    opacity: 0.8;
+}
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Cable billing Software">
-        <meta name="author" content="Technopits">
+/* Extra styles for the cancel button */
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
 
-        <!-- Bootstrap Stylesheet -->
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" media="screen">
+/* Center the image and position the close button */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
 
-        <!--  Fluid Grid System -->
-        <link rel="stylesheet" href="assets/css/fluid.html" media="screen">
+img.avatar {
+    width: 30%;
+    border-radius: 50%;
+}
 
-        <!-- Login Stylesheet -->
-        <link rel="stylesheet" href="assets/css/login.min.css" media="screen">
-        <title>DCNO | Log In</title>
+.login-container {
+    padding: 16px;
+}
 
-    </head>
-    <style>
-        .login_box{
-            padding-left: 40px;
-            background-repeat: no-repeat;
-            background-position: 12px center;
-            min-height: 48px;
-            height: 38px;
-            width: 100%;
-            border-bottom-width: 0;
-            -webkit-border-radius: 0;
-            -moz-border-radius: 0;
-            border-radius: 0;
-        }
-    </style>
-    <body>
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
 
-        <div id="da-home-wrap">
-            <div id="da-home-wrap-inner">
-                <div id="da-home-inner">
-                    <div id="da-home-box">
-                        <div id="da-home-box-header">
-                            <span class="da-home-box-title">Login to your DCN Account</span>
-                        </div>
-                        <form class="da-form da-home-form" method="POST" action="">
-                            <div class="da-form-row">
-                                <div class=" da-home-form-big">
-                                    <select name="type" class = "login_box"
-                                            onchange="if (this.selectedIndex === 2) {
-                                                        document.getElementById('da-login-username').setAttribute('placeholder', 'VC Number');
-                                                        document.getElementById('da-login-password').setAttribute('placeholder', 'Mobile Number');
-                                                        document.getElementById('da-login-password').setAttribute('style', 'background-image: url(assets/images/icons/led/src/user.png)');
-                                                        document.getElementById('da-login-username').setAttribute('style', 'background-image: url(assets/images/icons/led/src/key.png)');
-                                                    } else {
-                                                        document.getElementById('da-login-username').setAttribute('placeholder', 'Username');
-                                                        document.getElementById('da-login-password').setAttribute('placeholder', 'Password');
-                                                        document.getElementById('da-login-password').setAttribute('style', 'background-image: url(assets/images/icons/led/src/key.png)');
-                                                        document.getElementById('da-login-username').setAttribute('style', 'background-image: url(assets/images/icons/led/src/user.png)');
-                                                    }
-                                                    ;"
-                                            >
-                                        <option value="0">Operator</option>
-                                        <option value="1">Sub-Operator</option>
-                                        <!--                                        <option value="2">Customer</option>-->
-                                    </select>
-                                </div>
-                                <div class=" da-home-form-big">
-                                    <input type="text" name="username" id="da-login-username" placeholder="Username">
-                                </div>
-                                <div class=" da-home-form-big">
-                                    <input type="password" name="password" id="da-login-password" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="da-form-row">
-                                <ul class="da-form-list inline">
-                                    <li><input type="checkbox" id="remember"> <label for="remember">Remember me</label></li>
-                                    <li class="pull-right"><a href="#">Forget password</a></li>
-                                </ul>
-                            </div>
-                            <div class="da-home-form-btn-big">
-                                <input type="submit" value="Login" id="da-login-submit" class="btn btn-danger btn-block">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    /*padding-top: 60px;*/
+}
 
-        <!-- JS Libs -->
-        <script src="assets/js/libs/jquery-1.8.3.min.js"></script>
-        <script src="assets/js/libs/jquery.placeholder.min.js"></script>
-        <script src="plugins/validate/jquery.validate.min.js"></script>
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+}
 
-        <!-- JS Login -->
-        <script src="assets/js/core/dandelion.login.js"></script>
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
 
-    </body>
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
 
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
 
-</html>
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+</style>
+		</head>
+        <div class="container">
+			<div id="id01" class="modal" style="display:block">
+				<form class="modal-content animate" action="<?= base_url('login/validate_login')?>" method ="post">
+					<div class="imgcontainer">
+						
+						<img src="<?=base_url('assets/img/login_avtar.jpg')?>" alt="Avatar" class="avatar">
+						</div>
+						<div class="login-container">
+							<label for="uname">
+								<b>Username</b>
+							</label>
+							<input type="text" placeholder="Enter Username" name="USERNAME" required>
+								<label for="psw">
+									<b>Password</b>
+								</label>
+								<input type="password" placeholder="Enter Password" name="PASSWORD" required>
+									<button type="submit">Login</button>
+									<label>
+										<input type="checkbox" checked="checked" name="remember"> Remember me
+      
+										</label>
+									</div>
+									<div class="login-container" style="background-color:#f1f1f1">
+										<button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+										<span class="psw">Forgot 
+											<a href="#">password?</a>
+										</span>
+									</div>
+								</form>
+							</div>
+                            <div>
+							<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+					
